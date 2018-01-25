@@ -5,4 +5,4 @@ compiler:
   - gcc
 # Build steps
 before_script: ls
-script: ./make_tests.sh
+script: ./make_test.sh

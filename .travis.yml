@@ -4,5 +4,6 @@ language: cpp
 compiler:
   - gcc
 # Build steps
-before_script: ls
+before_install:
+  - chmod +x make_test.sh
 script: ./make_test.sh

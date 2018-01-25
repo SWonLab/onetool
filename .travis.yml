@@ -4,8 +4,5 @@ language: cpp
 compiler:
   - gcc
 # Build steps
-before_script: cd src
-script:
-  - ./configure
-  - cd c++
-  - make
+before_script: ls
+script: ./make_tests.sh

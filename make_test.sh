@@ -1,8 +1,13 @@
 #!/bin/bash
 set -ev
+pwd=`${pwd}`
+echo pwd
 if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
   cd src
-  ./configure
-  cd c++
-  make
+  echo "in src directory"
+  pwd=`${pwd}`
+  echo pwd
+  #./configure
+  #cd c++
+  #make
 fi

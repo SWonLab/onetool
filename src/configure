@@ -1,0 +1,110 @@
+#!/bin/sh
+# System configuration script for oneTool
+# 
+# Copyright 2014 Sungho Won
+# Last Modified 01/25/2018 Yeunjoo E. Song
+##########################################
+
+ONETOOLROOT=.
+SRCDIRS="c++"
+uname=uname
+hardware=`${uname} -m`
+osname=`${uname} -s`
+release=`${uname} -r`
+which=which
+rbin=`${which} R`
+grep=grep
+rhome=`${grep} -m 1 R_HOME_DIR ${rbin}`
+rincl=`${grep} -m 1 R_INCLUDE_DIR ${rbin}`
+
+
+
+case $hardware in
+        i[3456]86) 
+              case $osname in
+                [Ll]inux) ARCH=i386-linux2.0 ;;
+           CYGWIN_NT-5.*) ARCH=i386-mingw    ;;
+		  Darwin) ARCH=i386-darwin   ;;
+                       *) ARCH=              ;;
+              esac                
+              ;;
+	x86_64)
+              case $osname in
+                [Ll]inux) ARCH=x86_64-linux   ;;
+           CYGWIN_NT-6.*) ARCH=x86_64-mingw   ;;
+		  Darwin) ARCH=x86-64-darwin  ;;
+                       *) ARCH=               ;;
+              esac                
+        *)  ARCH=     ;;     
+esac
+
+if [ ! -n "$ARCH" ]; then
+  echo "  $ARCH is not a supported architecture"
+  exit 1
+fi
+
+comp=gcc
+
+if [ -n "$comp" ]; then
+  ARCH=$ARCH-$comp 
+fi
+
+echo "  Configuring for $ARCH."
+echo "ARCH=$ARCH"  >  config/arch
+echo "COMP=$comp"  >> config/arch
+echo "$rhome"      >> config/arch
+echo "$rincl"      >> config/arch
+ 
+
+# Check if the target directory exists and remove it.
+
+if [ -d targets/$ARCH ]; then 
+  if [ $# != 1 ] ; then
+    cleart=""
+    until [ -n "$cleart" ]; do
+      printf "  Target directory for $ARCH exists! Clear it? (y/N) "
+      read cleart
+      if [ -z "$cleart" ]; then
+        cleart=n
+      fi
+      case $cleart in
+        [Yy]) cleart=y  ;;
+        [Nn]) cleart=n  ;;
+           *) cleart="" ;;
+      esac
+    done
+    if [ $cleart = "y" ]; then
+      echo "  Clearing old target directory for $ARCH"
+      rm -rf targets/$ARCH
+    fi
+  fi
+  if [ $# == 1 ] ; then
+    echo "  Clearing old target directory for $ARCH" 
+    rm -rf targets/$ARCH
+  fi
+fi
+
+
+#
+# Build the target dir
+#
+if [ ! -d targets ]; then 
+  mkdir targets 
+fi 
+
+if [ ! -d "targets/$ARCH" ]; then
+  mkdir targets/$ARCH
+fi
+
+echo
+echo "  Building directory tree."
+
+for DIR in `find $SRCDIRS -type d -print`; do 
+    mkdir targets/$ARCH/$DIR 2>/dev/null
+done 
+
+echo;
+echo "  Build of target directory for $ARCH complete."
+echo
+
+exit 0

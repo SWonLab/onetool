@@ -1,0 +1,232 @@
+###############################################################################
+###############################################################################
+#
+#              [ONETOOL v0.0.1; 08 May 2017] -- 8 May 2017 09:03:27
+#
+# Remember you have agreed to add an appropriate statement (including the
+# NIH grant number) under "acknowledgments" in any publication of results
+# obtained by using this program. Suggested wording is:
+#
+# "(Some of)The results of this paper were obtained by using the software
+# package ONETOOL, which was supported by the National Research Foundation
+# of Korea Grant funded by Korean Government (NRF-2014S1A2A2028559)."
+#
+###############################################################################
+###############################################################################
+
+exe path:
+exe command: ../../onetool --bed h2.bed --bim h2.bim --fam h2.fam --relpair
+
+
+Family structure information :
+
+     PED. ID       IND. ID       SEX       PARENT1       PARENT2     
+     ------------  ------------  --------  ------------  ------------
+     FAM_1         SAMP10_1      F         SAMP3_1       SAMP6_1     
+     FAM_1         SAMP1_1       M         0             0           
+     FAM_1         SAMP2_1       F         0             0           
+     FAM_1         SAMP3_1       M         SAMP1_1       SAMP2_1     
+     FAM_1         SAMP4_1       M         0             0           
+     FAM_1         SAMP5_1       F         0             0           
+     FAM_1         SAMP6_1       F         SAMP4_1       SAMP5_1     
+     FAM_1         SAMP7_1       M         SAMP3_1       SAMP6_1     
+     FAM_1         SAMP8_1       F         SAMP3_1       SAMP6_1     
+     FAM_1         SAMP9_1       M         SAMP3_1       SAMP6_1     
+     FAM_10        SAMP10_10     F         SAMP3_10      SAMP6_10    
+     FAM_10        SAMP1_10      M         0             0           
+     FAM_10        SAMP2_10      F         0             0           
+     FAM_10        SAMP3_10      M         SAMP1_10      SAMP2_10    
+     FAM_10        SAMP4_10      M         0             0           
+     FAM_10        SAMP5_10      F         0             0           
+     FAM_10        SAMP6_10      F         SAMP4_10      SAMP5_10    
+     FAM_10        SAMP7_10      M         SAMP3_10      SAMP6_10    
+     FAM_10        SAMP8_10      F         SAMP3_10      SAMP6_10    
+     FAM_10        SAMP9_10      M         SAMP3_10      SAMP6_10    
+     FAM_2         SAMP10_2      F         SAMP3_2       SAMP6_2     
+     FAM_2         SAMP1_2       M         0             0           
+     FAM_2         SAMP2_2       F         0             0           
+     FAM_2         SAMP3_2       M         SAMP1_2       SAMP2_2     
+     FAM_2         SAMP4_2       M         0             0           
+     FAM_2         SAMP5_2       F         0             0           
+     FAM_2         SAMP6_2       F         SAMP4_2       SAMP5_2     
+     FAM_2         SAMP7_2       M         SAMP3_2       SAMP6_2     
+     FAM_2         SAMP8_2       F         SAMP3_2       SAMP6_2     
+     FAM_2         SAMP9_2       M         SAMP3_2       SAMP6_2     
+     FAM_3         SAMP10_3      F         SAMP3_3       SAMP6_3     
+     FAM_3         SAMP1_3       M         0             0           
+     FAM_3         SAMP2_3       F         0             0           
+     FAM_3         SAMP3_3       M         SAMP1_3       SAMP2_3     
+     FAM_3         SAMP4_3       M         0             0           
+     FAM_3         SAMP5_3       F         0             0           
+     FAM_3         SAMP6_3       F         SAMP4_3       SAMP5_3     
+     FAM_3         SAMP7_3       M         SAMP3_3       SAMP6_3     
+     FAM_3         SAMP8_3       F         SAMP3_3       SAMP6_3     
+     FAM_3         SAMP9_3       M         SAMP3_3       SAMP6_3     
+     FAM_4         SAMP10_4      F         SAMP3_4       SAMP6_4     
+     FAM_4         SAMP1_4       M         0             0           
+     FAM_4         SAMP2_4       F         0             0           
+     FAM_4         SAMP3_4       M         SAMP1_4       SAMP2_4     
+     FAM_4         SAMP4_4       M         0             0           
+     FAM_4         SAMP5_4       F         0             0           
+     FAM_4         SAMP6_4       F         SAMP4_4       SAMP5_4     
+     FAM_4         SAMP7_4       M         SAMP3_4       SAMP6_4     
+     FAM_4         SAMP8_4       F         SAMP3_4       SAMP6_4     
+     FAM_4         SAMP9_4       M         SAMP3_4       SAMP6_4     
+     FAM_5         SAMP10_5      F         SAMP3_5       SAMP6_5     
+     FAM_5         SAMP1_5       M         0             0           
+     FAM_5         SAMP2_5       F         0             0           
+     FAM_5         SAMP3_5       M         SAMP1_5       SAMP2_5     
+     FAM_5         SAMP4_5       M         0             0           
+     FAM_5         SAMP5_5       F         0             0           
+     FAM_5         SAMP6_5       F         SAMP4_5       SAMP5_5     
+     FAM_5         SAMP7_5       M         SAMP3_5       SAMP6_5     
+     FAM_5         SAMP8_5       F         SAMP3_5       SAMP6_5     
+     FAM_5         SAMP9_5       M         SAMP3_5       SAMP6_5     
+     FAM_6         SAMP10_6      F         SAMP3_6       SAMP6_6     
+     FAM_6         SAMP1_6       M         0             0           
+     FAM_6         SAMP2_6       F         0             0           
+     FAM_6         SAMP3_6       M         SAMP1_6       SAMP2_6     
+     FAM_6         SAMP4_6       M         0             0           
+     FAM_6         SAMP5_6       F         0             0           
+     FAM_6         SAMP6_6       F         SAMP4_6       SAMP5_6     
+     FAM_6         SAMP7_6       M         SAMP3_6       SAMP6_6     
+     FAM_6         SAMP8_6       F         SAMP3_6       SAMP6_6     
+     FAM_6         SAMP9_6       M         SAMP3_6       SAMP6_6     
+     FAM_7         SAMP10_7      F         SAMP3_7       SAMP6_7     
+     FAM_7         SAMP1_7       M         0             0           
+     FAM_7         SAMP2_7       F         0             0           
+     FAM_7         SAMP3_7       M         SAMP1_7       SAMP2_7     
+     FAM_7         SAMP4_7       M         0             0           
+     FAM_7         SAMP5_7       F         0             0           
+     FAM_7         SAMP6_7       F         SAMP4_7       SAMP5_7     
+     FAM_7         SAMP7_7       M         SAMP3_7       SAMP6_7     
+     FAM_7         SAMP8_7       F         SAMP3_7       SAMP6_7     
+     FAM_7         SAMP9_7       M         SAMP3_7       SAMP6_7     
+     FAM_8         SAMP10_8      F         SAMP3_8       SAMP6_8     
+     FAM_8         SAMP1_8       M         0             0           
+     FAM_8         SAMP2_8       F         0             0           
+     FAM_8         SAMP3_8       M         SAMP1_8       SAMP2_8     
+     FAM_8         SAMP4_8       M         0             0           
+     FAM_8         SAMP5_8       F         0             0           
+     FAM_8         SAMP6_8       F         SAMP4_8       SAMP5_8     
+     FAM_8         SAMP7_8       M         SAMP3_8       SAMP6_8     
+     FAM_8         SAMP8_8       F         SAMP3_8       SAMP6_8     
+     FAM_8         SAMP9_8       M         SAMP3_8       SAMP6_8     
+     FAM_9         SAMP10_9      F         SAMP3_9       SAMP6_9     
+     FAM_9         SAMP1_9       M         0             0           
+     FAM_9         SAMP2_9       F         0             0           
+     FAM_9         SAMP3_9       M         SAMP1_9       SAMP2_9     
+     FAM_9         SAMP4_9       M         0             0           
+     FAM_9         SAMP5_9       F         0             0           
+     FAM_9         SAMP6_9       F         SAMP4_9       SAMP5_9     
+     FAM_9         SAMP7_9       M         SAMP3_9       SAMP6_9     
+     FAM_9         SAMP8_9       F         SAMP3_9       SAMP6_9     
+     FAM_9         SAMP9_9       M         SAMP3_9       SAMP6_9     
+
+
+Phenotypes :
+
+     PED. ID       IND. ID       PHENOTYPE           
+     ------------  ------------  --------------------
+     FAM_1         SAMP10_1      1                   
+     FAM_1         SAMP1_1       1                   
+     FAM_1         SAMP2_1       0                   
+     FAM_1         SAMP3_1       0                   
+     FAM_1         SAMP4_1       1                   
+     FAM_1         SAMP5_1       1                   
+     FAM_1         SAMP6_1       1                   
+     FAM_1         SAMP7_1       0                   
+     FAM_1         SAMP8_1       1                   
+     FAM_1         SAMP9_1       0                   
+     FAM_10        SAMP10_10     0                   
+     FAM_10        SAMP1_10      0                   
+     FAM_10        SAMP2_10      0                   
+     FAM_10        SAMP3_10      1                   
+     FAM_10        SAMP4_10      0                   
+     FAM_10        SAMP5_10      1                   
+     FAM_10        SAMP6_10      1                   
+     FAM_10        SAMP7_10      0                   
+     FAM_10        SAMP8_10      1                   
+     FAM_10        SAMP9_10      0                   
+     FAM_2         SAMP10_2      1                   
+     FAM_2         SAMP1_2       1                   
+     FAM_2         SAMP2_2       0                   
+     FAM_2         SAMP3_2       0                   
+     FAM_2         SAMP4_2       0                   
+     FAM_2         SAMP5_2       1                   
+     FAM_2         SAMP6_2       1                   
+     FAM_2         SAMP7_2       0                   
+     FAM_2         SAMP8_2       1                   
+     FAM_2         SAMP9_2       0                   
+     FAM_3         SAMP10_3      1                   
+     FAM_3         SAMP1_3       0                   
+     FAM_3         SAMP2_3       1                   
+     FAM_3         SAMP3_3       1                   
+     FAM_3         SAMP4_3       0                   
+     FAM_3         SAMP5_3       0                   
+     FAM_3         SAMP6_3       0                   
+     FAM_3         SAMP7_3       0                   
+     FAM_3         SAMP8_3       0                   
+     FAM_3         SAMP9_3       0                   
+     FAM_4         SAMP10_4      1                   
+     FAM_4         SAMP1_4       1                   
+     FAM_4         SAMP2_4       1                   
+     FAM_4         SAMP3_4       1                   
+     FAM_4         SAMP4_4       1                   
+     FAM_4         SAMP5_4       0                   
+     FAM_4         SAMP6_4       0                   
+     FAM_4         SAMP7_4       1                   
+     FAM_4         SAMP8_4       0                   
+     FAM_4         SAMP9_4       1                   
+     FAM_5         SAMP10_5      1                   
+     FAM_5         SAMP1_5       1                   
+     FAM_5         SAMP2_5       1                   
+     FAM_5         SAMP3_5       1                   
+     FAM_5         SAMP4_5       0                   
+     FAM_5         SAMP5_5       1                   
+     FAM_5         SAMP6_5       0                   
+     FAM_5         SAMP7_5       1                   
+     FAM_5         SAMP8_5       1                   
+     FAM_5         SAMP9_5       0                   
+     FAM_6         SAMP10_6      1                   
+     FAM_6         SAMP1_6       1                   
+     FAM_6         SAMP2_6       0                   
+     FAM_6         SAMP3_6       0                   
+     FAM_6         SAMP4_6       0                   
+     FAM_6         SAMP5_6       0                   
+     FAM_6         SAMP6_6       1                   
+     FAM_6         SAMP7_6       1                   
+     FAM_6         SAMP8_6       0                   
+     FAM_6         SAMP9_6       1                   
+     FAM_7         SAMP10_7      1                   
+     FAM_7         SAMP1_7       0                   
+     FAM_7         SAMP2_7       0                   
+     FAM_7         SAMP3_7       0                   
+     FAM_7         SAMP4_7       1                   
+     FAM_7         SAMP5_7       0                   
+     FAM_7         SAMP6_7       0                   
+     FAM_7         SAMP7_7       0                   
+     FAM_7         SAMP8_7       1                   
+     FAM_7         SAMP9_7       0                   
+     FAM_8         SAMP10_8      1                   
+     FAM_8         SAMP1_8       0                   
+     FAM_8         SAMP2_8       1                   
+     FAM_8         SAMP3_8       0                   
+     FAM_8         SAMP4_8       1                   
+     FAM_8         SAMP5_8       1                   
+     FAM_8         SAMP6_8       1                   
+     FAM_8         SAMP7_8       1                   
+     FAM_8         SAMP8_8       0                   
+     FAM_8         SAMP9_8       1                   
+     FAM_9         SAMP10_9      1                   
+     FAM_9         SAMP1_9       0                   
+     FAM_9         SAMP2_9       0                   
+     FAM_9         SAMP3_9       1                   
+     FAM_9         SAMP4_9       0                   
+     FAM_9         SAMP5_9       0                   
+     FAM_9         SAMP6_9       1                   
+     FAM_9         SAMP7_9       1                   
+     FAM_9         SAMP8_9       1                   
+     FAM_9         SAMP9_9       0                   
+
+

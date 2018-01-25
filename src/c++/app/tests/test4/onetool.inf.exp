@@ -1,0 +1,106 @@
+###############################################################################
+###############################################################################
+#
+#              [ONETOOL v0.0.1; 06 Jul 2016] -- 6 Jul 2016 03:53:40
+#
+# Remember you have agreed to add an appropriate statement (including the
+# NIH grant number) under "acknowledgments" in any publication of results
+# obtained by using this program. Suggested wording is:
+#
+# "(Some of)The results of this paper were obtained by using the software
+# package ONETOOL, which was supported by the National Research Foundation
+# of Korea Grant funded by Korean Government (NRF-2014S1A2A2028559)."
+#
+###############################################################################
+###############################################################################
+
+exe path:
+exe command: ../../onetool --vcf et_simple_1.vcf --fam et_noloop2.fam --pheno et_noloop2.pheno --lodlink --typ test_segreg_AGE.typ
+
+
+Family structure information :
+
+     PED. ID       IND. ID       SEX       PARENT1       PARENT2     
+     ------------  ------------  --------  ------------  ------------
+     1             2171-JLH-1    M         0             0           
+     1             2171-JLH-10   M         0             0           
+     1             2171-JLH-11   F         0             0           
+     1             2171-JLH-12   M         2171-JLH-10   2171-JLH-11 
+     1             2171-JLH-13   F         0             0           
+     1             2171-JLH-14   F         0             0           
+     1             2171-JLH-15   M         0             0           
+     1             2171-JLH-16   M         2171-JLH-5    2171-JLH-6  
+     1             2171-JLH-17   F         2171-JLH-5    2171-JLH-6  
+     1             2171-JLH-18   M         2171-JLH-5    2171-JLH-6  
+     1             2171-JLH-19   F         2171-JLH-5    2171-JLH-6  
+     1             2171-JLH-2    F         0             0           
+     1             2171-JLH-20   F         2171-JLH-15   2171-JLH-32 
+     1             2171-JLH-21   M         2171-JLH-12   2171-JLH-13 
+     1             2171-JLH-22   F         2171-JLH-12   2171-JLH-13 
+     1             2171-JLH-23   M         2171-JLH-15   2171-JLH-32 
+     1             2171-JLH-24   M         2171-JLH-18   2171-JLH-8  
+     1             2171-JLH-25   M         2171-JLH-17   2171-JLH-7  
+     1             2171-JLH-26   F         2171-JLH-28   2171-JLH-29 
+     1             2171-JLH-27   F         2171-JLH-28   2171-JLH-29 
+     1             2171-JLH-28   M         2171-JLH-10   2171-JLH-11 
+     1             2171-JLH-29   F         2171-JLH-5    2171-JLH-6  
+     1             2171-JLH-3    M         0             0           
+     1             2171-JLH-30   M         2171-JLH-14   2171-JLH-16 
+     1             2171-JLH-31   F         2171-JLH-15   2171-JLH-32 
+     1             2171-JLH-32   F         2171-JLH-5    2171-JLH-6  
+     1             2171-JLH-33   M         2171-JLH-5    2171-JLH-6  
+     1             2171-JLH-34   M         0             0           
+     1             2171-JLH-35   M         2171-JLH-31   2171-JLH-34 
+     1             2171-JLH-36   M         2171-JLH-28   2171-JLH-29 
+     1             2171-JLH-38   F         2171-JLH-17   2171-JLH-7  
+     1             2171-JLH-4    F         2171-JLH-1    2171-JLH-2  
+     1             2171-JLH-5    M         0             0           
+     1             2171-JLH-6    F         2171-JLH-3    2171-JLH-4  
+     1             2171-JLH-7    M         0             0           
+     1             2171-JLH-8    F         0             0           
+     1             2171-JLH-9    M         2171-JLH-1    2171-JLH-2  
+
+
+Markers :
+
+     PED. ID       IND. ID       rs9988179   
+     ------------  ------------  ------------
+     1             2171-JLH-1    C/C         
+     1             2171-JLH-10   C/C         
+     1             2171-JLH-11   C/C         
+     1             2171-JLH-12   C/C         
+     1             2171-JLH-13   C/T         
+     1             2171-JLH-14   C/C         
+     1             2171-JLH-15   C/C         
+     1             2171-JLH-16   C/C         
+     1             2171-JLH-17   C/C         
+     1             2171-JLH-18   C/C         
+     1             2171-JLH-19   C/C         
+     1             2171-JLH-2    C/C         
+     1             2171-JLH-20   C/C         
+     1             2171-JLH-21   C/T         
+     1             2171-JLH-22   C/C         
+     1             2171-JLH-23   C/C         
+     1             2171-JLH-24   C/C         
+     1             2171-JLH-25   C/C         
+     1             2171-JLH-26   C/C         
+     1             2171-JLH-27   C/C         
+     1             2171-JLH-28   C/C         
+     1             2171-JLH-29   C/C         
+     1             2171-JLH-3    C/C         
+     1             2171-JLH-30   C/C         
+     1             2171-JLH-31   C/C         
+     1             2171-JLH-32   C/C         
+     1             2171-JLH-33   C/C         
+     1             2171-JLH-34   C/C         
+     1             2171-JLH-35   C/C         
+     1             2171-JLH-36   C/C         
+     1             2171-JLH-38   C/C         
+     1             2171-JLH-4    C/C         
+     1             2171-JLH-5    C/C         
+     1             2171-JLH-6    C/C         
+     1             2171-JLH-7    C/C         
+     1             2171-JLH-8    C/C         
+     1             2171-JLH-9    C/C         
+
+

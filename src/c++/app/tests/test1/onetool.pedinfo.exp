@@ -1,0 +1,55 @@
+###############################################################################
+###############################################################################
+#
+#              [ONETOOL v0.0.1; 14 Jun 2016] -- 14 Jun 2016 04:12:17
+#
+# Remember you have agreed to add an appropriate statement (including the
+# NIH grant number) under "acknowledgments" in any publication of results
+# obtained by using this program. Suggested wording is:
+#
+# "(Some of)The results of this paper were obtained by using the software
+# package ONETOOL, which was supported by the National Research Foundation
+# of Korea Grant funded by Korean Government (NRF-2014S1A2A2028559)."
+#
+###############################################################################
+###############################################################################
+
+==============================================================================
+|                     General Statistics: All Pedigrees                      |
+|============================================================================|
+|                 |    Count| Mean Size +/- Std. Dev. (     Min.,      Max.) |
+|----------------------------------------------------------------------------|
+|Pedigrees        |        1|     58.00 +/-      ---  (       58,        58) |
+|============================================================================|
+|Generation Statistics||  Nuc  Family Statistics ||  Inh  Vector Bit Stats   |
+|# of Gens | # of Peds|| # of Nuc Fams |# of Peds||   # of Bits   |# of Peds |
+|----------------------------------------------------------------------------|
+|    undet.|         1||     17 -    32|        1||     33 -    64|         1|
+|============================================================================|
+|                 |    Count| Mean Size +/- Std. Dev. (     Min.,      Max.) |
+|----------------------------------------------------------------------------|
+|Sibships         |       19|      2.05 +/-      1.47 (        1,         7) |
+|============================================================================|
+|Constituent   |          || Marriage    |          ||             |         |
+|Pedigrees     |         1|| Rings       |         0|| Loops       |        1|
+|============================================================================|
+|Pairs                   |       Count||  Individuals           |       Count|
+|----------------------------------------------------------------------------|
+|Parent/Off              |          78||  Male                  |          30|
+|Sib/Sib                 |          41||  Female                |          28|
+|Sis/Sis                 |           9||  Unknown               |           0|
+|Bro/Bro                 |           8||        Total           |          58|
+|Bro/Sis                 |          24||                        |            |
+|Grandp.                 |          76||  Founder               |          19|
+|Avunc.                  |          98||  Non-founder           |          39|
+|Half Sib                |           2||  Singleton             |           0|
+|Cousin                  |          79||        Total           |          58|
+|============================================================================|
+|                      Individuals With Multiple Mates                       |
+|(Pedigree, Individual)   Mates                                              |
+|----------------------------------------------------------------------------|
+|(1, 64)                  65, n2                                             |
+|============================================================================|
+|                        Consanguineous Mating Pairs                         |
+|none                                                                        |
+==============================================================================

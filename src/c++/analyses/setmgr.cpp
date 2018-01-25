@@ -1,0 +1,1085 @@
+/* Hyeonjae Park, Sungyoung Lee
+ * biznok@gmail.com
+ *
+ * Part of WISARD : setmgr.cpp
+ */
+#include <string.h>
+#include "analyses/setmgr.h"
+#include "utils/data.h"
+
+namespace ONETOOL {
+
+cSetManagerAnalysis::cSetManagerAnalysis(cIO *Cp_inpIO) : cAnalysis(Cp_inpIO)
+{
+	Ha_fpGene = NULL;
+	/* --gsetconsec & --geneset are m.e. */
+	if (IS_ASSIGNED(gsetconsec) && IS_ASSIGNED(geneset))
+		halt_fmt(WISARD_CANT_EXCL_OPT, "--gsetconsec", "--geneset");
+
+	/* Initialize gene definition FIRST */
+	wsStrCst S_fnSet = OPT_STRING(set);
+	char	*S_set = NULL;
+	// 150824 --set is no more ESSENTIAL
+	if (S_fnSet) {
+		wsAlloc(S_set, char, strlen(S_fnSet)+1);
+		strcpy(S_set, S_fnSet);
+
+		/* Get the count of gs def */
+		char *Sp_delim=NULL, *Sp_str=NULL;	
+		for (N_defGene=1,Sp_str=S_set ; (Sp_delim=strchr(Sp_str, ',')) ;
+				N_defGene++,Sp_str=++Sp_delim);
+
+		/* Allocate buffer */
+		wsAlloc(Ha_fpGene, FILE*, N_defGene);
+
+		/* Open files */
+		for (N_defGene=0,Sp_str=S_set ; Sp_str ; N_defGene++) {
+			Sp_delim = strchr(Sp_str, ',');
+			if (Sp_delim)
+				*Sp_delim = '\0';
+
+			Ha_fpGene[N_defGene] = fopen(Sp_str, "r");
+			if (Ha_fpGene[N_defGene] == NULL)
+				halt_fmt(WISARD_FAIL_OPEN_GSFILE_IDX, N_defGene, Sp_str);
+	//			halt("Failed to open %dth gene-set definition file [%s]", N_gsDef,
+	//				Sp_str);
+			Sa_gDefPath.push_back((string)Sp_str);
+
+			if (Sp_delim == NULL)
+				Sp_str = Sp_delim;
+			else
+				Sp_str = ++Sp_delim;
+		}
+	} else
+		N_defGene = 0;
+
+	DEALLOC(S_set);
+
+	/* Initialize gene-set definition SECOND (IF EXISTS) */	
+	if (IS_ASSIGNED(geneset)) {
+		/* Try to open gene-set definition file */
+		H_fpGset = fopen(OPT_STRING(geneset), "r");
+		if (H_fpGset == NULL)
+			halt_fmt(WISARD_FAIL_OPEN_FILEWITHDESC, "Gene-set definition",
+			OPT_STRING(geneset));
+	} else
+		H_fpGset = NULL;
+}
+
+inline wsUint randIntFromRange(xOptRange &X_opt)
+{
+	/* FIXED case */
+	if (X_opt.R_s == X_opt.R_e) return (wsUint)X_opt.R_e;
+	else {
+		if (X_opt.R_sEQ) {
+			return X_opt.R_eEQ ?
+				/* [a,b] */
+				wsRand()%((wsUint)(X_opt.R_e-X_opt.R_s)+1) + (wsUint)X_opt.R_s :
+				/* [a,b) */
+				wsRand()%(wsUint)(X_opt.R_e-X_opt.R_s) + (wsUint)X_opt.R_s;
+		} else {
+			return X_opt.R_eEQ ?
+				/* (a,b] */
+				wsRand()%(wsUint)(X_opt.R_e-X_opt.R_s) + (wsUint)X_opt.R_s + 1:
+				/* (a,b) */
+				wsRand()%(wsUint)(X_opt.R_e-X_opt.R_s-1) + (wsUint)X_opt.R_s + 1;
+		}
+	}
+}
+
+cSetManagerAnalysis::cSetManagerAnalysis(cIO *Cp_inpIO, cVariantMap *Cp_inpMM) : cAnalysis(Cp_inpIO)
+{
+	wsUint*		Na_chr	= NULL;
+	/* Mode 1 : Use 'actually' consecutive region */
+	wsUint**	Na_pos	= Cp_inpMM->getVariantPosMap(&Na_chr);
+	vVariant&	Xa_snp	= getIO()->getVariant();
+	wsUint		N_mm	= 1;
+
+	/* Set default value for --setoverlap if not assigned */
+	if (!IS_ASSIGNED(setoverlap)) {
+		OPTION().assign("setoverlap", OPTION().getDefVal("setoverlap"));
+		OPTION().FORCE_OPT_NUMBER(setoverlap);
+	}
+
+	if (IS_ASSIGNED(setconsec)) {
+		wsUint		N_cs	= OPT_NUMBER(setconsec);
+		wsUint		N_xOver	= N_cs - OPT_NUMBER(setoverlap);
+		for (wsUint chr=0 ; chr<=NCHR_SPECIES ; chr++) {
+			wsUint *Np_pos = Na_pos[chr];
+			/* Skip if there is not enough number of variants in the chromosome
+				* to perform N_cs consecutive variants */
+			if (Na_chr[chr] < N_cs) continue;
+	//		wsUint N_loop = Na_chr[chr] - N_cs + 1;
+	//		wsUint N_overlap = 0;
+
+			for (wsUint i=0 ; i<Na_chr[chr] ; i+=N_xOver) {
+				/* Make pairing name */
+				wsUint	N_pos = Np_pos[i];
+				vInt	Xa_snps;
+	//			string	S_pName(Xa_snp[N_pos].name);
+				int		N_chr = Xa_snp[N_pos].chr;
+				char	B_test = 1;
+				Xa_snps.push_back(N_pos);
+				for (wsUint j=1 ; j<N_cs ; j++) {
+					if ((i+j) >= Na_chr[chr])
+						break;
+					xVariant &X_s = Xa_snp[Np_pos[i+j]];
+
+					/* Make do not test if chr are disagree */
+					if (X_s.chr != N_chr) {
+						B_test = 0;
+						break;
+					}
+
+	// 				S_pName += ",";
+	// 				S_pName += X_s.name;
+					Xa_snps.push_back(Np_pos[i+j]);
+				}
+				/* Do not test if B_test is disabled */
+				if (B_test == 0) continue;
+
+				char S_pName[256];
+				sprintf(S_pName, "SET%d", N_mm++);
+	//			Xa_gDef.insert(make_pair(S_pName, Xa_snps));
+				Xa_gDef.insert(make_pair(S_pName, Xa_snps));
+			}
+		}
+	} else if (IS_ASSIGNED(setrandom)) {
+		/* FIXME : --inter or no --inter? */
+		for (wsUint chr=0 ; chr<=NCHR_SPECIES ; chr++) {
+			wsUint*	Np_pos	= Na_pos[chr];
+			wsUint	N_var	= Na_chr[chr];
+
+			/* Create index vector */
+			vInt	Xv_idx;
+			for (wsUint i=0 ; i<N_var ; i++) Xv_idx.push_back(i);
+
+			/* Generate sets */
+			xOptRange& X_opt = OPT_RANGE(setrandom);
+			while (Xv_idx.size()) {
+				wsUint N_szCur = randIntFromRange(X_opt);
+
+				/* Pick N_szCur varints */
+				vInt Xa_snps;
+				for (wsUint i=0 ; i<N_szCur && Xv_idx.size() ; i++) {
+					wsUint N_idx = rand()%(Xv_idx.size());
+					vInt_it X_it = Xv_idx.begin() + N_idx;
+					Xa_snps.push_back(Np_pos[*X_it]);
+					Xv_idx.erase(X_it);
+				}
+
+				char S_pName[256];
+				sprintf(S_pName, "SET%d", N_mm++);
+				Xa_gDef.insert(make_pair(S_pName, Xa_snps));
+			}
+		}
+	}
+	LOGnote("[%d] sets generated by %s option\n", N_mm,
+		IS_ASSIGNED(setconsec)?"--setconsec":"--setrandom");
+
+	/* Assume that there is no file-based gene def */
+	N_defGene	= 0;
+	Ha_fpGene	= NULL;
+	H_fpGset	= NULL;
+}
+
+cSetManagerAnalysis::~cSetManagerAnalysis()
+{
+	/* Close gene-level definition files */
+	for (wsUint i=0 ; i<N_defGene ; i++)
+		fclose(Ha_fpGene[i]);
+	DEALLOC(Ha_fpGene);
+
+	/* Close gene-set definition file */
+	if (H_fpGset) fclose(H_fpGset);
+}
+
+typedef struct _xGeneDefT1
+{
+	int chr;
+	int st, ed;
+	char name[4096];
+} xGeneDefT1;
+
+typedef struct _xGeneDefT2
+{
+	char name1[4096];
+	char name2[4096];
+} xGeneDefT2;
+
+typedef struct _xGsetDef
+{
+	char name1[4096];
+	char name2[4096];
+} xGsetDef;
+
+int cSetManagerAnalysis::_initRangedGeneDef(FILE *H_fp, vVariant &Xa_snp)
+{
+	int					N_idxLine	= 1;
+	char*				buf			= NULL;
+	xGeneDefT1			gsData;
+	vector<xGeneDefT1>	Xa_gsFile;
+	/* Set default value for --setspan if not assigned */
+	if (!IS_ASSIGNED(setspan)) {
+		OPTION().assign("setspan", OPTION().getDefVal("setspan"));
+		OPTION().FORCE_OPT_NUMBER(setspan);
+	}
+	int					N_incspan	= OPT_NUMBER(setspan);
+
+	wsAlloc(buf, char, 1024*1024);
+	wsUint				N_defSkip = 0;
+	for ( ; fgets(buf, 1024*1024, H_fp) ; N_idxLine++) {
+		char tmp[32];
+		char start[32], end[32];
+
+		/* Extract gene definitions */
+		sscanf(buf, "%s %s %s %s", tmp, start, end, gsData.name);
+
+		/* Set info */
+		char *p = NULL;
+		gsData.chr	= getChr(tmp);
+		gsData.st	= max((int)strtol(start, &p, 10)-N_incspan, 1);
+		if (p && p[0]) return -2;
+		gsData.ed	= strtol(end, &p, 10)+N_incspan;
+		if (p && p[0]) return -2;
+
+		/* Gene-set definition range MUST be positive integer */
+		if (gsData.st <= 0 || gsData.ed <= 0)
+			halt_fmt(WISARD_INVL_GSFMT_NONPOS_GSRANGE, gsData.st, gsData.ed,
+				N_idxLine);
+
+		/* Starting point gene set MUST be prior than end point */
+		if (gsData.st >= gsData.ed)
+			halt_fmt(WISARD_INVL_GSFMT_REV_GSRANGE, gsData.st, gsData.ed,
+				N_idxLine);
+
+		/* Gene definition MUST be placed on valid chromosome */
+		if (gsData.chr < 1 || (wsUint)gsData.chr > NCHR_SPECIES) {
+			// 150211 fix : Skip instead of halt
+			N_defSkip++;
+			continue;
+//			halt_fmt(WISARD_INVL_GSFMT_CHR, tmp, N_idxLine);
+		}
+
+		/* Insert to integrated gene set def. if it is not inserted */
+		if (Xa_gDef.find(gsData.name) == Xa_gDef.end())
+			Xa_gDef.insert( pair<string,vector<int> >(string(gsData.name), vector<int>()));
+		Xa_gsFile.push_back(gsData);
+	}
+	free(buf);
+	if (N_defSkip)
+		LOGnote("[%d] entries have skipped due to its chromosome\n", N_defSkip);
+
+	mGeneDef_it	X_gene;
+	vVariant_it	X_mkr;
+	vector<xGeneDefT1>::iterator xGS1_iter;
+	int index;
+	xMaf*		Xp_maf			= getIO()->getMAF();
+	int			N_annoRange	= (int)OPT_NUMBER(annorange);
+
+	for( X_mkr=Xa_snp.begin(), index=0; X_mkr!=Xa_snp.end(); X_mkr++, index++){
+		/* Do not insert variant into gene-set when its MAF is 0 */
+		if (Xp_maf[index].R_maf == W0)
+			continue;
+
+		for( xGS1_iter=Xa_gsFile.begin(); xGS1_iter!=Xa_gsFile.end(); xGS1_iter++){
+			if (X_mkr->chr != xGS1_iter->chr) continue;
+
+			char B_in = 0;
+ 			int st = xGS1_iter->st;
+ 			int ed = xGS1_iter->ed;
+ 			int pos = X_mkr->pos;
+// 			if (st>pos || pos>ed) continue;
+			int N_s = st < N_annoRange ? 0 : st - N_annoRange;
+			if (st <= pos && pos <= ed)
+				/* Within gene */
+				B_in = 1;
+			/* Have proximity */
+			else if (N_s <= pos &&
+				pos <= ed + N_annoRange)
+				B_in = 1;
+
+			if (!B_in) continue;
+
+			X_gene = Xa_gDef.find(xGS1_iter->name);
+			if( X_gene != Xa_gDef.end() ){
+				//Xa_gs.find(xGS_iter->name).push_back(index);
+				X_gene->second.push_back(index);
+			}
+		}
+	}
+
+	return N_idxLine;
+}
+
+int cSetManagerAnalysis::_initRefSeqGeneDef(FILE *H_fp, vVariant &Xa_snp)
+{
+	int					N_idxLine	= 1;
+	char*				buf			= NULL;
+	xGeneDefT1			gsData;
+	vector<xGeneDefT1>	Xa_gsFile;
+	/* Set default value for --setspan if not assigned */
+	if (!IS_ASSIGNED(setspan)) {
+		OPTION().assign("setspan", OPTION().getDefVal("setspan"));
+		OPTION().FORCE_OPT_NUMBER(setspan);
+	}
+	int					N_incspan	= OPT_NUMBER(setspan);
+
+	wsAlloc(buf, char, 1024*1024);
+	fgets(buf, 1024*1024, H_fp);
+
+	wsUint N_token = 0;
+	char** Sa_tokens = loadStringValuesByWS(buf, &N_token);
+	/* Find the following columns: name, chrom, txStart, txEnd, exonCount, exonStarts, exonEnds */
+	mDataIdx Xm_pos;
+	LOOP(i, N_token) Xm_pos.insert(make_pair(Sa_tokens[i], i));
+	/* name, chrom, txStart, txEnd is essential */
+	if (mapIsInexist(Xm_pos, "name") || mapIsInexist(Xm_pos, "chrom") ||
+		mapIsInexist(Xm_pos, "txStart") || mapIsInexist(Xm_pos, "txEnd"))
+		halt("RefSeq file format requires 4 mandatory fields: name, chrom, txStart and txEnd");
+
+	/* Deallocate */
+	LOOP(i, N_token) {
+		free(Sa_tokens[i]);
+	}
+	DEALLOC(Sa_tokens);
+
+	wsUint	N_defSkip	= 0;
+	wsUint	I_name		= Xm_pos["name"];
+	wsUint	I_chrom		= Xm_pos["chrom"];
+	wsUint	I_txStart	= Xm_pos["txStart"];
+	wsUint	I_txEnd		= Xm_pos["txEnd"];
+	for (; fgets(buf, 1024*1024, H_fp) ; N_idxLine++) {
+		Sa_tokens = loadStringValuesByWS(buf, &N_token);
+
+		strcpy(gsData.name, Sa_tokens[I_name]);
+
+		/* Set info */
+		char *p = NULL;
+		gsData.chr	= getChr(Sa_tokens[I_chrom]);
+		gsData.st	= max((int)strtol(Sa_tokens[I_txStart], &p, 10)-N_incspan, 1);
+		if (p && p[0]) return -2;
+		gsData.ed	= strtol(Sa_tokens[I_txEnd], &p, 10)+N_incspan;
+		if (p && p[0]) return -2;
+
+		/* Gene-set definition range MUST be positive integer */
+		if (gsData.st <= 0 || gsData.ed <= 0)
+			halt_fmt(WISARD_INVL_GSFMT_NONPOS_GSRANGE, gsData.st, gsData.ed,
+			N_idxLine);
+
+		/* Starting point gene set MUST be prior than end point */
+		if (gsData.st >= gsData.ed)
+			halt_fmt(WISARD_INVL_GSFMT_REV_GSRANGE, gsData.st, gsData.ed,
+			N_idxLine);
+
+		/* Gene definition MUST be placed on valid chromosome */
+		if (gsData.chr < 1 || (wsUint)gsData.chr > NCHR_SPECIES) {
+			// 150211 fix : Skip instead of halt
+			N_defSkip++;
+			continue;
+		}
+
+		/* Insert to integrated gene set def. if it is not inserted */
+		if (Xa_gDef.find(gsData.name) == Xa_gDef.end())
+			Xa_gDef.insert(pair<string, vector<int> >(string(gsData.name), vector<int>()));
+		Xa_gsFile.push_back(gsData);
+	}
+	free(buf);
+	if (N_defSkip)
+		LOGnote("[%d] entries have skipped due to its chromosome\n", N_defSkip);
+
+	mGeneDef_it	X_gene;
+	vVariant_it	X_mkr;
+	vector<xGeneDefT1>::iterator xGS1_iter;
+	int index;
+	xMaf*		Xp_maf			= getIO()->getMAF();
+	int			N_annoRange	= (int)OPT_NUMBER(annorange);
+
+	for (X_mkr=Xa_snp.begin(), index=0; X_mkr!=Xa_snp.end(); X_mkr++, index++){
+		/* Do not insert variant into gene-set when its MAF is 0 */
+		if (Xp_maf[index].R_maf == W0)
+			continue;
+
+		for (xGS1_iter=Xa_gsFile.begin(); xGS1_iter!=Xa_gsFile.end(); xGS1_iter++){
+			if (X_mkr->chr != xGS1_iter->chr) continue;
+
+			char B_in = 0;
+			int st = xGS1_iter->st;
+			int ed = xGS1_iter->ed;
+			int pos = X_mkr->pos;
+			// 			if (st>pos || pos>ed) continue;
+			int N_s = st < N_annoRange ? 0 : st - N_annoRange;
+			if (st <= pos && pos <= ed)
+				/* Within gene */
+				B_in = 1;
+			/* Have proximity */
+			else if (N_s <= pos &&
+				pos <= ed + N_annoRange)
+				B_in = 1;
+
+			if (!B_in) continue;
+
+			X_gene = Xa_gDef.find(xGS1_iter->name);
+			if (X_gene != Xa_gDef.end()){
+				//Xa_gs.find(xGS_iter->name).push_back(index);
+				X_gene->second.push_back(index);
+			}
+		}
+	}
+
+	return N_idxLine;
+}
+
+int cSetManagerAnalysis::_initPLINKGeneDef(FILE *H_fp, vVariant &Xa_snp)
+{
+	int					N_idxLine	= 1;
+	char				buf[2048]	= {0};
+	char				prev[256]	= {0};
+	xGeneDefT2			gsData;
+	vector<xGeneDefT2>	Xa_gaFile;
+	mGeneDef			Xa_currGS;
+	xMaf*				Xp_maf		= getIO()->getMAF();
+	wsUint				N_ignored	= 0;
+
+	multimap<string, int> Xa_snpMap;
+	{
+		int index;
+		vector<xVariant>::iterator iter;
+		for( iter = Xa_snp.begin(), index = 0; iter != Xa_snp.end(); iter++, index++)
+		{
+			Xa_snpMap.insert( pair<string, int>(string(iter->name), index) );
+		}
+	}
+
+	/* Set current gene to '' */
+	char S_curGN[256] = {0, };
+	for ( ; fgets(buf, 2048, H_fp) ; N_idxLine++) {
+		if (N_idxLine % 1000 == 0) 
+			notice("%d entries loaded ... \r", N_idxLine);
+
+		/* If there is NO current gene, it is gene name */
+		if (S_curGN[0] == '\0') {
+			/* Pass empty or invalid line */
+			if (sscanf(buf, "%s", gsData.name1) != 1)
+				continue;
+
+			/* Name should not be 'END */
+			if (stricmp(gsData.name1, "END") == 0)
+				halt_fmt(WISARD_INVL_GSFMT_DBLEND, N_idxLine);
+			/* Copy name to current gene name */
+			strcpy(S_curGN, gsData.name1);
+
+			continue;
+		}
+
+		/* Pass empty or invalid line */
+		if (sscanf(buf, "%s", gsData.name2) != 1)
+			continue;
+
+		/* if the name is 'END', set S_curGN to '' */
+		if (stricmp(gsData.name2, "END") == 0) {
+			S_curGN[0] = '\0';
+			continue;
+		}
+
+		/* Otherwise, insert */
+		if (stricmp("intergenic", gsData.name1) != 0) {
+			mGeneDef_it map_iter = Xa_currGS.find(string(gsData.name1));
+
+			if (map_iter == Xa_currGS.end()) { /* New in this GS */
+				Xa_currGS.insert( pair<string, vector<int> >(string(gsData.name1), vector<int>()) );
+
+				map_iter = Xa_gDef.find(string(gsData.name1));
+
+				if (map_iter == Xa_gDef.end()) {
+					// insert new key to Xa_gs map
+					Xa_gDef.insert( pair<string, vector<int> >(string(gsData.name1), vector<int>()) );
+					map_iter = Xa_gDef.find(string(gsData.name1));
+				}
+			} else if (strcmp(prev, gsData.name1) != 0) { /* Duplication found */
+				halt_fmt(WISARD_DUPL_GSID, gsData.name1, N_idxLine);
+			} else
+				map_iter = Xa_gDef.find(string(gsData.name1));
+
+			strcpy(prev, gsData.name1);
+
+			pair< multimap<string, int>::iterator, multimap<string, int>::iterator > iter_pair = Xa_snpMap.equal_range(string(gsData.name2));
+			if( iter_pair.first == iter_pair.second )
+			{ // not found
+				// do nothing
+			} else {
+				multimap<string, int>::iterator iter;
+				for( iter = iter_pair.first; iter != iter_pair.second; iter++)
+				{
+					/* Do not insert variant into gene-set when its MAF is 0 */
+					if (Xp_maf[iter->second].R_maf != W0) {
+						vector<int>::iterator i=map_iter->second.begin();
+
+						/* Check variant name duplication */
+						for ( ; i!=map_iter->second.end() ; i++)
+							if (*i == iter->second) {
+								pverbose("[%s:%s] duplicated, will be ignored\n", gsData.name1, gsData.name2);
+								N_ignored++;
+								//halt_fmt(WISARD_DUPL_SNPINGENESET, gsData.name2, gsData.name1);
+								break;
+							}
+						if (i == map_iter->second.end())
+							map_iter->second.push_back( iter->second );
+					}
+				}
+			}
+		}
+	} /* END OF for */
+
+	LOG("%d entries have ignored in this gene-set\n");
+
+	return N_idxLine;
+}
+
+void cSetManagerAnalysis::run()
+{
+	vVariant&	Xa_snp = Cp_IO->getVariant();
+
+	/* For all assigned gene definition files */
+	// 150824 --expression gene == variant
+	if (IS_ASSIGNED(expression)) {
+		wsUint I = 0;
+		FOREACHDO (vVariant_it, Xa_snp, i, I++)
+			Xa_gDef[i->name].push_back(I);
+	} else for (wsUint x=0 ; x<N_defGene ; x++) {
+		int		N_defGeneType = 0;
+		char	S_buf[1024] = { 0, };
+
+		// read the first line
+		if (fgets(S_buf, 1023, Ha_fpGene[x]) == NULL)
+			halt_fmt(WISARD_NULL_GENESET_CONTENTS);
+	
+		wsUint N_token = 0;
+		char** Sa_tokens = loadStringValuesByWS(S_buf, &N_token);
+		if (N_token && !strcmp("#bin", Sa_tokens[0])) {
+			N_defGeneType = 5;
+			LOG("Given gene definition is RefSeq format\n");
+		} else switch (N_token) {
+			case 4: N_defGeneType = 1; break;
+			case 2: N_defGeneType = 2; LOG("Given gene definition is paired form or list form\n"); break;
+			case 1: N_defGeneType = 3; LOG("Given gene definition is PLINK form\n"); break;
+			case 0: break;
+			default: N_defGeneType = 4; LOG("Given gene definition is list form\n"); break;
+		}
+
+		/* Deallocate */
+		LOOP (i, N_token) {
+			free(Sa_tokens[i]);
+		}
+		DEALLOC(Sa_tokens);
+		rewind(Ha_fpGene[x]);
+
+
+		// log for debug
+		//printf("vector<xSNP>.size() = %d\n", (int)Xa_snp.size());
+
+		int N_idxLine = -1;
+		switch (N_defGeneType) {
+		case 1:
+			N_idxLine = _initRangedGeneDef(Ha_fpGene[x], Xa_snp);
+			if (N_idxLine != -2) {
+				LOG("Given gene definition is ranged form\n");
+				break;
+			} else {
+				N_defGeneType = 2;
+				rewind(Ha_fpGene[x]);
+				LOG("Given gene definition is paired form or list form\n");
+			}
+		case 2:
+			N_idxLine = _initPairedOrListGeneDef(Ha_fpGene[x], Xa_snp);
+			break;
+		case 3:
+			N_idxLine = _initPLINKGeneDef(Ha_fpGene[x], Xa_snp);
+			break;
+		case 4:
+			N_idxLine = _initPairedOrListGeneDef(Ha_fpGene[x], Xa_snp, 1);
+			break;
+		case 5:
+			N_idxLine = _initRefSeqGeneDef(Ha_fpGene[x], Xa_snp);
+			break;
+		default:
+			halt_fmt(WISARD_SYST_INVL_GSTYPE, Sa_gDefPath[x].c_str(), N_defGeneType);
+			break;
+		}
+		LOG("%d lines retrieved from gene definition file [%s]\n", N_idxLine,
+			Sa_gDefPath[x].c_str());
+
+		/* Remove EMPTY gene definitions */
+		for( map<string,vector<int> >::iterator it = Xa_gDef.begin(); it != Xa_gDef.end(); /*it++*/ ) {
+			if (it->second.size()<1) {
+					pverbose("[%10s] erased ... \r", it->first.c_str());
+				Xa_gDef.erase(it++);
+			} else it++;
+		}
+	}
+
+	/* Load gene-set definition if exists */
+	if (IS_ASSIGNED(gsetconsec)) {
+		vStr X;
+		wsUint N_sz = 0;
+
+		/* Get --gsetconsec value */
+		xOptRange& X_gsetcs = OPT_RANGE(gsetconsec);
+		wsUint N_gsDiff = (wsUint)(X_gsetcs.R_e - X_gsetcs.R_s);
+		if (N_gsDiff == 0)
+			N_sz = (wsUint)X_gsetcs.R_s;
+		else
+			N_sz = (wsRand() % (N_gsDiff + 1)) + (wsUint)X_gsetcs.R_s;
+
+		FOREACH (mGeneDef_it, Xa_gDef, i) {
+			X.push_back(i->first);
+			if (X.size() == N_sz) {
+				char S_name[256];
+				sprintf(S_name, "GENESET%d", (wsUint)Xa_gsDef.size()+1);
+				Xa_gsDef.insert(make_pair(S_name, X));
+				X.clear();
+
+				/* Set size again */
+				if (N_gsDiff == 0)
+					N_sz = (wsUint)X_gsetcs.R_s;
+				else
+					N_sz = (wsRand() % (N_gsDiff + 1)) + (wsUint)X_gsetcs.R_s;
+			}
+		}
+		/* Insert last buffer if it have member(s) AND
+		     if --gsetconsec is constant OR
+			 remained size is equal to or over --gsetconsec min value */
+		if (X.size() && (N_gsDiff == 0 || (wsUint)X.size()>=(wsUint)X_gsetcs.R_s)){
+			char S_name[256];
+			sprintf(S_name, "GENESET%d", (wsUint)Xa_gsDef.size()+1);
+			Xa_gsDef.insert(make_pair(S_name, X));
+		}
+
+		if (N_gsDiff == 0)
+			LOG("[%d gene-sets] defined by [--gsetconsec %d]\n", Xa_gsDef.size(),
+				(wsUint)X_gsetcs.R_s);
+		else
+			LOG("[%d gene-sets] defined by [--gsetconsec %d~%d]\n", Xa_gsDef.size(),
+			(wsUint)X_gsetcs.R_s, (wsUint)X_gsetcs.R_e);
+	} else if (H_fpGset) {
+		char *Sp_buf = NULL;
+		wsAlloc(Sp_buf, char, 1024*1024);
+
+		/* For each line */
+		for (wsUint L=0 ; fgets(Sp_buf, 1024*1024, H_fpGset) ; L++) {
+			char *a = NULL;
+			char *b = NULL;
+
+			/* Checking */
+			getString(&Sp_buf, &a);
+			if (!Sp_buf[0] && a == NULL)
+				halt_fmt(WISARD_INVL_FILE_INCMPL, "Gene-set mapping file",
+					OPT_STRING(geneset), L+1);
+			string S = (string)Sp_buf;
+			vStr &X = Xa_gsDef[S];
+
+			/* */
+			for ( ; a ; a=b) {
+				getString(&a, &b);
+				string v = (string)a;
+
+				/* Insert unless it exists */
+				if (mapIsExist(Xa_gDef, v))
+					X.push_back(v);
+				Xa_gsSize[S]++;
+			}
+		}
+		LOG("[%d gene-sets] loaded from [%s]\n", Xa_gsDef.size(), OPT_STRING(geneset));
+		DEALLOC(Sp_buf);
+	}
+}
+
+void cSetManagerAnalysis::summary()
+{
+/**/cExporter*	Cp_gss	= NULL;
+	cExporter*	Cp_gms	= NULL;
+	if (OPT_ENABLED(genesummary)) {
+		Cp_gss = cExporter::summon("summary.gene.lst"); /*$*/
+		LOGoutput("Summary of loaded gene definition is exported "
+			"to [%s.summary.gene.lst]\n", OPT_STRING(out));
+
+		/* Print #INCLUDED MARKERS# if verbose */
+		if (OPT_ENABLED(verbose))
+			Cp_gss->put("CHR	NAME	COUNT	START	END	LIST\n");
+		else
+			Cp_gss->put("CHR	NAME	COUNT	START	END\n");
+	}
+	if ((OPT_ENABLED(genesummary) || OPT_ENABLED(gmapsummary)) && Xa_gsDef.size()) {
+		cExporter* Cp_gsx = cExporter::summon("summary.gset.lst"); /*$*/
+		LOGoutput("Summary of loaded gene set definition is exported "
+			"to [%s.summary.gset.lst]\n", OPT_STRING(out));
+
+		/* Print #INCLUDED MARKERS# if verbose */
+		Cp_gsx->put("NAME	COUNT	LIST\n");
+		FOREACH (mGeneSet_it, Xa_gsDef, i) {
+			Cp_gsx->fmt("%s	%d	", i->first.c_str(), i->second.size());
+			FOREACH (vStr_it, i->second, j)
+				Cp_gsx->fmt("%s,", j->c_str());
+			Cp_gsx->put("\n");
+		}
+
+		delete Cp_gsx;
+	}
+	if (OPT_ENABLED(gmapsummary)) {
+		/* Check phenotype is UNIVARAIATE DICHOTOMOUS */
+		if (getIO()->isContinuous() || getIO()->sizePheno() > 1)
+			halt_fmt(WISARD_CANT_OPT_W_SOMESTATE, "--gmapsummary",
+			"the phenotype is continuous or there are multiple phenotypes");
+
+		Cp_gms = cExporter::summon("summary.gmap.lst"); /*$*/
+		LOGoutput("Summary of gene-variant mapping result is "
+			"exported to [%s.summary.gmap.lst]\n", OPT_STRING(out));
+
+		Cp_gms->put("CHR	NAME	VARIANT	MINOR	CASE0	CASE1	CASE2	CTRL0	CTRL1	CTRL2\n");  /*$*/
+	}
+
+	vVariant Xa_mkr = getIO()->getVariant();
+	FOREACH (mGeneDef_it, Xa_gDef, i) {
+		/* Print gene-summary */
+		if (Cp_gss) {
+			Cp_gss->fmt("%d	%s	%d	%d	%d",
+				Xa_mkr[i->second.at(0)].chr,
+				i->first.c_str(), (int)i->second.size(),
+				(int)Xa_mkr[i->second.at(0)].pos,
+				(int)Xa_mkr[i->second.at(i->second.size()-1)].pos);
+			/* Print marker list --verbose */
+			if (OPT_ENABLED(verbose)) {
+				Cp_gss->put("\t");
+				FOREACH (vInt_it, i->second, j)
+					Cp_gss->fmt("%s,", Xa_mkr[*j].name);
+			}
+			Cp_gss->put("\n");
+		}
+		/* Print gene-marker mapping */
+		if (Cp_gms && i->second.size()) {
+			vInt	&Xa_gSNPs	= i->second;
+			wsStrCst	Sp_chr		= getChrName2(Xa_mkr[Xa_gSNPs[0]].chr);
+			wsStrCst	Sp_gname	= i->first.c_str();
+			wsUint	N_samp		= getIO()->sizeSample();
+			char	**Na_data	= getIO()->getGenotype();
+			FOREACH (vInt_it, i->second, j) {
+				wsUint	N_idx	= *j;
+				wsRealCst	*Ra_ph	= getIO()->getPheno();
+				wsUint	N_ca[3]	= { 0, };
+				wsUint	N_ct[3]	= { 0, };
+
+				/* Counting it */
+				for (wsUint k=0 ; k<N_samp ; k++) {
+					if (isMissingReal(Ra_ph[k])) continue;
+					char N_geno = Na_data[k][N_idx];
+					if (isMissing(N_geno)) continue;
+
+					Ra_ph[k]==W0 ?
+						N_ct[(wsUint)N_geno]++ : N_ca[(wsUint)N_geno]++;
+				}
+
+				if (OPT_ENABLED(indel))
+					Cp_gms->fmt("%s	%s	%s	%s	%d	%d	%d	%d	%d	%d\n",
+					Sp_chr, Sp_gname, Xa_mkr[N_idx].name,
+					Xa_mkr[N_idx].indel2, N_ca[0], N_ca[1],
+					N_ca[2], N_ct[0], N_ct[1], N_ct[2]);
+				else
+					Cp_gms->fmt("%s	%s	%s	%c	%d	%d	%d	%d	%d	%d\n",
+					Sp_chr, Sp_gname, Xa_mkr[N_idx].name,
+					Xa_mkr[N_idx].al2, N_ca[0], N_ca[1],
+					N_ca[2], N_ct[0], N_ct[1], N_ct[2]);
+			}
+		}
+	} /* END OF mGeneSet_it */
+
+	if (Cp_gss) delete Cp_gss;
+	if (Cp_gms) delete Cp_gms;
+}
+
+void cSetManagerAnalysis::exportSet()
+{
+/**/cExporter*	Cp_gdef	= cExporter::summon("set.gene.lst"); /*$*/
+	LOGoutput("Loaded gene definition is exported "
+		"to [%s.set.gene.lst]\n", OPT_STRING(out));
+
+	if (IS_ASSIGNED(settype)) {
+		vVariant Xa_mkr = getIO()->getVariant();
+		switch (OPT_NUMBER(settype)) {
+		case 1:
+			FOREACH (mGeneDef_it, Xa_gDef, i) {
+				/* Print gene-summary */
+				wsStrCst S_gn = i->first.c_str();
+				FOREACH (vInt_it, i->second, j)
+					Cp_gdef->fmt("%s	%s\n", S_gn, Xa_mkr[*j].name);
+			} /* END OF mGeneSet_it */
+			break;
+		case 2:
+			FOREACH (mGeneDef_it, Xa_gDef, i) {
+				/* Print gene-summary */
+				Cp_gdef->fmt("%s\n", i->first.c_str());
+				FOREACH (vInt_it, i->second, j)
+					Cp_gdef->fmt("%s\n", Xa_mkr[*j].name);
+				Cp_gdef->put("END\n\n");
+			} /* END OF mGeneSet_it */
+			break;
+		case 3:
+			FOREACH (mGeneDef_it, Xa_gDef, i) {
+				/* Print gene-summary */
+				Cp_gdef->fmt("%s", i->first.c_str());
+				FOREACH (vInt_it, i->second, j)
+					Cp_gdef->fmt("	%s", Xa_mkr[*j].name);
+				Cp_gdef->put("\n");
+			} /* END OF mGeneSet_it */
+			break;
+		case 4:
+			FOREACH (mGeneDef_it, Xa_gDef, i) {
+				/* Skip empty */
+				if (i->second.size() == 0) continue;
+
+				/* Get min and max */
+				wsUint N_min = Xa_mkr[i->second.at(0)].pos;
+				wsUint N_max = N_min;
+				wsUint N_chr = Xa_mkr[i->second.at(0)].chr;
+				FOREACH (vInt_it, i->second, j) {
+					wsUint N_curPos = Xa_mkr[*j].pos;
+					if (N_min > N_curPos)
+						N_min = N_curPos;
+					if (N_max < N_curPos)
+						N_max = N_curPos;
+				}
+				
+				/* Print gene-summary */
+				Cp_gdef->fmt("%s	all_genes	%s	+	%d	%d	%d	%d	1	%d,	%d,\n",
+					i->first.c_str(), getChrName2(N_chr), N_min, N_max,
+					N_min, N_max, N_min, N_max);
+			} /* END OF mGeneSet_it */
+			break;
+		default:
+			halt_fmt(WISARD_INVL_OPTVAL_GENERAL_INT, OPT_NUMBER(settype), "--settype");
+			break;
+		}
+	} else {
+		vVariant Xa_mkr = getIO()->getVariant();
+		FOREACH (mGeneDef_it, Xa_gDef, i) {
+			/* Print gene-summary */
+			Cp_gdef->fmt("%s", i->first.c_str());
+			FOREACH (vInt_it, i->second, j)
+				Cp_gdef->fmt("	%s", Xa_mkr[*j].name);
+			Cp_gdef->put("\n");
+		} /* END OF mGeneSet_it */
+	}
+
+	mGeneSet& Xm_gset = getGeneSetDef();
+	if (Xm_gset.size()) {
+		cExporter*	Cp_gsdef	= cExporter::summon("set.geneset.lst"); /*$*/
+		LOGoutput("Loaded gene-set definition is exported "
+			"to [%s.set.geneset.lst]\n", OPT_STRING(out));
+		FOREACH (mGeneSet_it, Xm_gset, i) {
+			Cp_gsdef->put(i->first.c_str());
+			FOREACH (vStr_it, i->second, j)
+				Cp_gsdef->fmt("	%s", j->c_str());
+			Cp_gsdef->put("\n");
+		}
+		delete Cp_gsdef;
+	}
+
+	delete Cp_gdef;
+}
+
+mGeneDef& cSetManagerAnalysis::getGeneDef()
+{
+	/* ±¸ÇöµÈ °Í?Ó */
+	return Xa_gDef;
+}
+
+mGeneSet& cSetManagerAnalysis::getGeneSetDef()
+{
+	/* ±¸ÇöµÈ °Í?Ó */
+	return Xa_gsDef;
+}
+
+mDataIdx& cSetManagerAnalysis::getGeneSetOrigSize()
+{
+	return Xa_gsSize;
+}
+
+vInt& cSetManagerAnalysis::getSNPindicesByName(wsStrCst S_gName)
+{
+	/* ±¸ÇöµÈ °Í?Ó */
+	mGeneDef_it X_resFind = Xa_gDef.find(S_gName);
+	if (X_resFind == Xa_gDef.end())
+		halt("Can't find such gene [%s]", S_gName);
+	
+	return X_resFind->second;
+}
+
+int cSetManagerAnalysis::_initPairedOrListGeneDef(FILE *H_fp, vVariant &Xa_snp,
+	char B_mustListForm/*=0*/)
+{	
+	int		N_idxLine	= 1;
+	char*	buf			= NULL;
+	char	prev[4096]	= { 0, };
+	wsUint	N_ignored	= 0;
+	wsAlloc(buf, char, 1024*1024*8);
+	mGeneDef	Xa_currGS;
+	xMaf*		Xp_maf	= getIO()->getMAF();
+
+	xGeneDefT2 gsData;
+	vector<xGeneDefT2>	Xa_gaFile;
+
+	multimap<string, int> Xa_snpMap;
+	{
+		int index;
+		vVariant_it iter;
+		/* Build marker map */
+		for( iter = Xa_snp.begin(), index = 0; iter != Xa_snp.end(); iter++, index++)
+			Xa_snpMap.insert(make_pair((string)iter->name, index));
+	}
+	//LOG("Xa_snpMap.size() = %d\n", (int)Xa_snpMap.size());
+
+	/* In this case, it is carefully checked that the # of elements in each line is
+	 * 1. Exactly two
+	 * 2. or various but at least two
+	 */
+
+	/* Find out the format of gene-set is paired or not*/
+	char B_isPaired = 1;
+	if (B_mustListForm)
+		B_isPaired = 0;
+	else while (fgets(buf, 1024*1024*8, H_fp) != NULL) {
+		char *a, *b;
+		/* Count the number */
+		int N_elem = 0;
+		for (a=buf ; a ; a=b,N_elem++)getString(&a, &b);
+		//int N_elem = sscanf(buf, "%s %s\n", gsData.name1, gsData.name2);
+		if (N_elem != 2) {
+			LOG("Given gene-set is identified as list form\n");
+			B_isPaired = 0;
+			break;
+		}
+	}
+	if (B_isPaired)
+		LOG("Given gene-set is identified as paired form\n");
+	rewind(H_fp);
+
+	/* Read gene-set information again in order to retrieve */
+	for ( ; fgets(buf, 1024*1024*8, H_fp) ; N_idxLine++) {
+		if (N_idxLine % 1000 == 0)
+			notice("%d entries loaded ... \r", N_idxLine);
+		if (!buf[0]) break;
+
+		/* If the format is paired form */
+		if (B_isPaired == 1) {
+			sscanf(buf, "%s %s", gsData.name1, gsData.name2);
+
+			/* Do not include the name of this gene-set is intergenic */
+			if (!stricmp("intergenic", gsData.name1))
+				continue;
+			string gN1 = gsData.name1;
+			mGeneDef_it map_iter = Xa_currGS.find(gN1);
+
+			if (map_iter == Xa_currGS.end()) { // New in current GS
+				Xa_currGS.insert( pair<string, vector<int> >(gN1, vInt()));
+
+				/* Find this entry in Xa_gs */
+				map_iter = Xa_gDef.find(gN1);
+
+				if (map_iter == Xa_gDef.end()) {
+					Xa_gDef.insert( pair<string, vector<int> >(gN1, vInt()));
+					map_iter = Xa_gDef.find(gN1);
+				}
+			} else if (strcmp(prev, gsData.name1) != 0) { /* Duplication */
+				halt_fmt(WISARD_DUPL_GSID, gsData.name1, N_idxLine);
+			} else
+				/* Find this entry in Xa_gs */
+				map_iter = Xa_gDef.find(gN1);
+
+			strcpy(prev, gsData.name1);
+
+			pair< multimap<string, int>::iterator, multimap<string, int>::iterator > iter_pair =
+				Xa_snpMap.equal_range(string(gsData.name2));
+			if( iter_pair.first == iter_pair.second )
+			{ // not found
+				// do nothing
+			} else {
+				multimap<string, int>::iterator iter;
+				for( iter = iter_pair.first; iter != iter_pair.second; iter++) {
+					/* Do not insert marker into gene-set when its MAF is 0 */
+					if (Xp_maf[iter->second].R_maf != W0) {
+						vInt_it i=map_iter->second.begin();
+
+						/* Check marker name duplication */
+						for ( ; i!=map_iter->second.end() ; i++)
+							if (*i == iter->second) {
+								pverbose("[%s:%s] duplicated, will be ignored\n", gsData.name1, gsData.name2);
+								//halt_fmt(WISARD_DUPL_SNPINGENESET, gsData.name2, gsData.name1);
+								N_ignored++;
+								break;
+							}
+
+						if (i == map_iter->second.end())
+							map_iter->second.push_back( iter->second );
+					}
+				}
+			}
+		} else {
+			/* If the format is list form */
+			char *a, *b;
+
+			/* Get the name of current gene-set */
+			getString(&buf, &a);
+			if (!stricmp(buf, "intergenic")) continue;
+
+			/* Find out whether this gene-set is already registered or not
+			 * IN THIS FILE (for multiple geneset allocation) */
+			mGeneDef_it map_iter = Xa_currGS.find(string(buf));
+			if (map_iter != Xa_currGS.end())
+				halt_fmt(WISARD_DUPL_GSID, buf, N_idxLine);
+			else {
+				map_iter = Xa_gDef.find(string(buf));
+
+				if (map_iter == Xa_gDef.end()) { // insert new key to Xa_gs map
+					Xa_gDef.insert( pair<string, vector<int> >(string(buf), vector<int>()) );
+					Xa_currGS.insert( pair<string, vector<int> >(string(buf), vector<int>()) );
+					map_iter = Xa_gDef.find(string(buf));
+				}
+			}
+
+			/* Insert entries */
+			for ( ; a ; a=b) {
+				if (!a[0]) break;
+				getString(&a, &b);
+
+				pair< multimap<string, int>::iterator, multimap<string, int>::iterator > iter_pair = Xa_snpMap.equal_range(string(a));
+				if (iter_pair.first == iter_pair.second) // not found
+					continue;
+//					LOG("%s of %s not found in dataset\n", a, buf);
+					// do nothing
+				multimap<string, int>::iterator iter;
+				for( iter = iter_pair.first; iter != iter_pair.second; iter++) {
+					/* Do not insert SNP into gene-set when its MAF is 0 */
+					if (Xp_maf[iter->second].R_maf != W0) {
+						vInt_it i=map_iter->second.begin();
+						/* Check marker name duplication */
+						for ( ; i!=map_iter->second.end() ; i++)
+							if (*i == iter->second) {
+								pverbose("[%s:%s] duplicated, will be ignored\n", buf, a);
+								N_ignored++;
+								break;
+							}
+						if (i == map_iter->second.end()) {
+//								LOG("%s inserted to %s\n", iter->first.c_str(), buf);
+							map_iter->second.push_back( iter->second );
+						}
+					}
+				}
+			}
+		}
+	}
+	LOG("%d entries have ignored in this gene-set\n", N_ignored);
+
+	DEALLOC(buf);
+	return N_idxLine;
+}
+
+} // End namespace ONETOOL

@@ -1,0 +1,40 @@
+-------------------------------------------------------------
+ WISARD - Workbench for Integrated Superfast Assocation study
+          with Related Data
+ Version 1.1.3.0, (C) 2013-2015 Sungyoung Lee
+-------------------------------------------------------------
+[init] Working machine : JOB1
+[init] Working directory : /home2/sylee/onetool/src/c++
+[init] Run wisard as : --simfam --extfam --szfam 10 --szvar 100 --randbinpheno --makevcf --out h2 --makeped
+
+[init] [Provide verbose output(`--verbose`)] allocated default value `0`
+[init] [Number of threads used in analysis(`--thread`)] allocated default value `1`
+[init] [String for phenotype missingness(`--mispheno`)] allocated default value `-9`
+[init] [String for genotype missingness(`--misgeno`)] allocated default value `0`
+[init] [Treat 1=case/0=control for binary phenotype(`--1case`)] allocated default value `0`
+[init] [Treat 1=female/0=male for sex encoding(`--1sex`)] allocated default value `0`
+[init] [Genetic model used in the dataset(`--model`)] allocated default value `additive`
+[init] Case phenotype is [2], control phenotype is [1]
+[init] Male coding is [1], female coding is [2]
+[wsInit] Compiled features : zlib(ver. 1.2.3.4) SSE precise symmetry
+[wsInit] System features : SSSE3
+[wsInit] [NOTE] Random seed set to 1461918542
+[logSet] [OUTPUT] Execution log is exported to [h2.log]
+[wsInit] WISARD begins at : 2016-04-29 17:29:02
+[init] Initialized with [1] out of maximum [24] threads
+[cSimFamIO] [100] variants will be simulated with [0] significant variant(s)
+[cSimFamIO] Simulation data generated, [100] samples with [100] variants
+[_finalize] Generate random binary phenotype...
+[_finalize] Binary phenotype [PHENOTYPE] have [52] cases, [48] controls, and [0] missings
+[_finalize] 10 family read
+[_finalize] 100[?] individuals read
+[_finalize] Total genotyping rate : 100.00% [10000/10000]
+[_finalize] This dataset have full genotypes, so analysis speed will be boosted!
+[exportPED] [OUTPUT] Final dataset is exported with [h2.ped] [h2.map]
+[exportVCF] Final dataset is exported with [h2.vcf] [h2.fam]
+[exportVCF] [100/100] variants exported
+[wsInitData] [49.648msec.] Data file loaded [100 sample(s)/100 variant(s)]
+[run] This dataset have *identical* family structures
+[analysis] 40 founders found
+
+[57.47msec.] WISARD successfully complete at [2016-04-29 17:29:02]

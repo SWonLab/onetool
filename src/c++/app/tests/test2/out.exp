@@ -1,0 +1,100 @@
+###############################################################################
+###############################################################################
+#
+#              [ONETOOL v0.0.1; 14 Jun 2016] -- 14 Jun 2016 04:30:35
+#
+# Remember you have agreed to add an appropriate statement (including the
+# NIH grant number) under "acknowledgments" in any publication of results
+# obtained by using this program. Suggested wording is:
+#
+# "(Some of)The results of this paper were obtained by using the software
+# package ONETOOL, which was supported by the National Research Foundation
+# of Korea Grant funded by Korean Government (NRF-2014S1A2A2028559)."
+#
+###############################################################################
+###############################################################################
+
+[4m[init][0m Working machine : 
+[4m[init][0m Working directory : 
+[4m[init][0m Run onetool as : --vcf et_simple.vcf --fam et_noloop2.fam --pheno et_noloop2.pheno --pname ET,AGE --fcor
+
+[4m[__procOption][0;31m [WARNING][0m Option [--pheno] is deprecated, use [--sampvar] instead
+[4m[init][0m [Output prefix(`--out`)] allocated default value `onetool`
+[4m[init][0m [Provide verbose output(`--verbose`)] allocated default value `0`
+[4m[init][0m [Number of threads used in analysis(`--thread`)] allocated default value `1`
+[4m[init][0m [String for phenotype missingness(`--mispheno`)] allocated default value `-9`
+[4m[init][0m [String for genotype missingness(`--misgeno`)] allocated default value `0`
+[4m[init][0m [Treat 1=case/0=control for binary phenotype(`--1case`)] allocated default value `0`
+[4m[init][0m [Treat 1=female/0=male for sex encoding(`--1sex`)] allocated default value `0`
+[4m[init][0m [Genetic model used in the dataset(`--model`)] allocated default value `additive`
+[4m[init][0m [Run S.A.G.E. segreg(`--segreg`)] allocated default value `0`
+[4m[init][0m [Run S.A.G.E. lodlink(`--lodlink`)] allocated default value `0`
+[4m[init][0m Case phenotype is [2], control phenotype is [1]
+[4m[init][0m Male coding is [1], female coding is [2]
+[4m[init][0m Binstatus [0], [37] samples found from alternative FAM file
+[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[init][0m [0] variants scanned[4m[_procVcfLine_header][0m 37 samples found in header, 0 filtered
+[4m[init][0m [0] variants scanned[4m[init][0m [1] variants scanned[4m[init][0m [2] variants scanned[4m[init][0m [3] variants scanned[4m[init][0m [4] variants scanned[4m[init][0m [4] variants scanned
+[4m[init][0m [0/4] lines processed...[4m[init][0m [4/4] lines processed, [0] variants initially filtered out
+[4m[init][0m [4/4] variants and [37/37] samples loaded
+[4m[_loadSampVar_check][0m Sample variable file [et_noloop2.pheno] loaded
+[4m[loadSampVar][0m [4] columns were found from sample variable file(s)
+[4m[loadSampVar][0m 2 phenotype(s) and 0 covariate(s) selected
+[4m[loadSampVar][0m 37*2 alternative phenotypes were retrieved
+[4m[loadSampVar][0m Phenotype [AGE] have type `REAL NUMBER`
+[4m[loadSampVar][0m Phenotype [ET] have type `REAL NUMBER`
+[4m[_finalize][0m 1 2171-JLH-1 0
+[4m[_finalize][0m 1 2171-JLH-10 0
+[4m[_finalize][0m 1 2171-JLH-11 0
+[4m[_finalize][0m 1 2171-JLH-12 0
+[4m[_finalize][0m 1 2171-JLH-13 0
+[4m[_finalize][0m 1 2171-JLH-14 0
+[4m[_finalize][0m 1 2171-JLH-15 0
+[4m[_finalize][0m 1 2171-JLH-16 0
+[4m[_finalize][0m 1 2171-JLH-17 0
+[4m[_finalize][0m 1 2171-JLH-18 0
+[4m[_finalize][0m 1 2171-JLH-19 0
+[4m[_finalize][0m 1 2171-JLH-2 0
+[4m[_finalize][0m 1 2171-JLH-20 0
+[4m[_finalize][0m 1 2171-JLH-21 0
+[4m[_finalize][0m 1 2171-JLH-22 0
+[4m[_finalize][0m 1 2171-JLH-23 0
+[4m[_finalize][0m 1 2171-JLH-24 0
+[4m[_finalize][0m 1 2171-JLH-25 0
+[4m[_finalize][0m 1 2171-JLH-26 0
+[4m[_finalize][0m 1 2171-JLH-27 0
+[4m[_finalize][0m 1 2171-JLH-28 0
+[4m[_finalize][0m 1 2171-JLH-29 0
+[4m[_finalize][0m 1 2171-JLH-3 0
+[4m[_finalize][0m 1 2171-JLH-30 0
+[4m[_finalize][0m 1 2171-JLH-31 0
+[4m[_finalize][0m 1 2171-JLH-32 0
+[4m[_finalize][0m 1 2171-JLH-33 0
+[4m[_finalize][0m 1 2171-JLH-34 0
+[4m[_finalize][0m 1 2171-JLH-35 0
+[4m[_finalize][0m 1 2171-JLH-36 0
+[4m[_finalize][0m 1 2171-JLH-38 0
+[4m[_finalize][0m 1 2171-JLH-4 0
+[4m[_finalize][0m 1 2171-JLH-5 0
+[4m[_finalize][0m 1 2171-JLH-6 0
+[4m[_finalize][0m 1 2171-JLH-7 0
+[4m[_finalize][0m 1 2171-JLH-8 0
+[4m[_finalize][0m 1 2171-JLH-9 0
+[4m[_finalize][0m Continuous phenotype [ET] have [2] missings
+[4m[_finalize][0m Found that [2] samples having at least one missing phenotype
+[4m[_finalize][0;36m [OUTPUT][0m List of them exported to [onetool.miss.pheno.lst]
+[4m[_finalize][0m 1 family read
+[4m[_finalize][0m 37[?] individuals read
+[4m[_finalize][0m Total genotyping rate : 100.00% [148/148]
+[4m[_finalize][0m This dataset have full genotypes, so analysis speed will be boosted!
+[4m[run][0m This dataset have *identical* family structures
+[4m[wisard_analysis][0m 0 founders found
+
+
+Performing PEDINFO analysis............................done.
+
+
+Performing FCOR analysis...............................done.
+
+
+Analysis complete!
+

@@ -1,0 +1,86 @@
+###############################################################################
+###############################################################################
+#
+#              [ONETOOL v0.0.1; 14 Jun 2016] -- 14 Jun 2016 04:12:17
+#
+# Remember you have agreed to add an appropriate statement (including the
+# NIH grant number) under "acknowledgments" in any publication of results
+# obtained by using this program. Suggested wording is:
+#
+# "(Some of)The results of this paper were obtained by using the software
+# package ONETOOL, which was supported by the National Research Foundation
+# of Korea Grant funded by Korean Government (NRF-2014S1A2A2028559)."
+#
+###############################################################################
+###############################################################################
+
+exe path: 
+exe command: ../../onetool --vcf et.vcf --fam et.fam --pheno et.pheno
+
+
+Family structure information :
+
+     PED. ID       IND. ID       SEX       PARENT1       PARENT2     
+     ------------  ------------  --------  ------------  ------------
+     1             2171-JLH-21   M         81            82          
+     1             2171-JLH-22   F         77            78          
+     1             2171-JLH-23   F         73            74          
+     1             2171-JLH-24   M         64            65          
+     1             2171-JLH-25   M         62            63          
+     1             2171-JLH-26   F         2171-JLH-28   2171-JLH-29 
+     1             2171-JLH-27   F         2171-JLH-28   2171-JLH-29 
+     1             2171-JLH-28   M         86            87          
+     1             2171-JLH-29   F         60            61          
+     1             2171-JLH-30   M         83            84          
+     1             2171-JLH-31   F         2171-JLH-32   85          
+     1             2171-JLH-32   F         60            61          
+     1             2171-JLH-33   M         60            61          
+     1             2171-JLH-34   M         0             0           
+     1             2171-JLH-35   M         2171-JLH-31   2171-JLH-34 
+     1             2171-JLH-36   M         2171-JLH-28   2171-JLH-29 
+     1             60            M         0             0           
+     1             61            F         67            68          
+     1             62            M         0             0           
+     1             63            F         60            61          
+     1             64            M         60            61          
+     1             65            F         0             0           
+     1             67            M         0             0           
+     1             68            F         69            70          
+     1             69            M         0             0           
+     1             70            F         0             0           
+     1             71            M         69            70          
+     1             72            F         0             0           
+     1             73            M         71            72          
+     1             74            F         0             0           
+     1             75            M         69            70          
+     1             76            F         0             0           
+     1             77            M         75            76          
+     1             78            F         0             0           
+     1             79            M         69            70          
+     1             80            F         0             0           
+     1             81            M         79            80          
+     1             82            F         0             0           
+     1             83            M         60            61          
+     1             84            F         86            87          
+     1             85            M         0             0           
+     1             86            M         0             0           
+     1             87            F         0             0           
+     1             n1            F         60            61          
+     1             n10           M         62            63          
+     1             n11           F         64            n2          
+     1             n12           F         64            65          
+     1             n13           M         0             0           
+     1             n14           F         2171-JLH-22   n4          
+     1             n15           M         n13           n14         
+     1             n2            F         0             0           
+     1             n3            M         77            78          
+     1             n4            M         0             0           
+     1             n5            F         81            82          
+     1             n6            F         81            82          
+     1             n7            F         2171-JLH-32   85          
+     1             n8            M         2171-JLH-32   85          
+     1             n9            M         83            84          
+
+
+%ONETOOL-E: Pedigree(s) with loop(s) detected. FCOR, SEGREG and LODLINK
+            analyses will be skipped!

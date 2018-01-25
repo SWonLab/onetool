@@ -1,0 +1,63 @@
+###############################################################################
+###############################################################################
+#
+#              [ONETOOL v0.0.1; 06 Jul 2016] -- 6 Jul 2016 03:53:40
+#
+# Remember you have agreed to add an appropriate statement (including the
+# NIH grant number) under "acknowledgments" in any publication of results
+# obtained by using this program. Suggested wording is:
+#
+# "(Some of)The results of this paper were obtained by using the software
+# package ONETOOL, which was supported by the National Research Foundation
+# of Korea Grant funded by Korean Government (NRF-2014S1A2A2028559)."
+#
+###############################################################################
+###############################################################################
+
+Options Selected
+================
+Main locus type                          trait
+Main locus name                          test_segreg_AGE
+
+Lod scores                               yes
+
+  Recombination Fractions Selected
+  ================================
+  Sex averaged         0.0000         0.0100         0.0500         0.1000         0.2000         0.3000         0.4000   
+
+Linkage tests                            yes
+  Sex-specific recombination fractions   no
+  Assume homogeneity                     yes
+
+Smith's test for homogeneity             no
+
+Morton's test for homogeneity            no
+
+Genotype probabilities                   no
+
+
+Results
+=======
+
+                  Lod Scores By Constituent Pedigree      
+                  Non-Sex-Specific Recombination Fractions
+                                                          
+
+                  Constituent Pedigree in Pedigree 1 Containing Member 2171-JLH-1
+
+Locus             0.0000         0.0100         0.0500         0.1000         0.2000         0.3000         0.4000         
+---------------   ------------   ------------   ------------   ------------   ------------   ------------   ------------   
+rs9988179             0.000000       0.000000       0.000000       0.000000       0.000000       0.000000       0.000000   
+
+
+
+
+
+                  Lod Score Linkage Test      
+                  Variance-Covariance Matrices
+                  Parameter Order (Avg Recomb)
+
+Locus             Estimates in [0, .5]          Estimates in [0, 1]
+---------------   --------------------          -------------------
+rs9988179                 ---                             --- 
+

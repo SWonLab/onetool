@@ -4,9 +4,8 @@ language: cpp
 compiler:
   - gcc
 # Build steps
-before_script: ls
+before_script: cd src
 script:
-  - cd ${TRAVIS_BUILD_DIR}/src
   - ./configure
   - cd c++
   - make

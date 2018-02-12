@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Model-based &mdash; ONETOOL 0.9 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="ONETOOL 0.9 documentation" href="../index.html"/>
+        <link rel="up" title="Tutorials" href="../tutorials_landing.html"/>
+        <link rel="next" title="Single-variant" href="6_association.html"/>
+        <link rel="prev" title="Familial Aggregation (Correlation)" href="4_trait.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ONETOOL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html"> Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html"> Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials_landing.html"> Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#input">Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#infoqc-ananlysis">InfoQC Ananlysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#trait-ananlysis">Trait Ananlysis</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../tutorials_landing.html#linkage-ananlysis">Linkage Ananlysis</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="">Model-based</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-free">Model-free</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#association-ananlysis">Association Ananlysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../other_resources.html"> Other Resources</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ONETOOL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../tutorials_landing.html">Tutorials</a> &raquo;</li>
+        
+      <li>Model-based</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorials/5_linkage.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p id="sec-linkage">Linkage analysis in ONETOOL is composed of two parts, two-point model-based linkage
+and two-point model-free linkage accounting for linkage disequilibrium (LD).</p>
+<div class="section" id="model-based">
+<span id="tlodlink"></span><h1>Model-based<a class="headerlink" href="#model-based" title="Permalink to this headline">¶</a></h1>
+<p>LODLINK module performs model-based lod score calculations for two-point linkage between a main
+trait (that follows Mendelian transmission and has either two or three types) and each of the
+variants in the input genotype file.  The output from SEGREG model (.typ file) is used as
+input to specify the main trait model.</p>
+<p>LODLINK in S.A.G.E. is used which uses the genotype/phase elimination algorithms proposed
+by Lange and Boehnke (1983) and Lange and Goradia (1987), together with other enhancements,
+to perform relatively fast exact linkage calculations.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --vcf test_miss0.vcf --lodlink --typ test_segreg.typ
+</pre></div>
+</div>
+<p>It generates 2 output files:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Summary output file (.lodlink.sum) - contains lod scores and results of linkage and linkage homogeneity tests. Results in this file are based on calculations done on the pedigree data file as a whole.</li>
+<li>Detailed output file (.lodlink.det) - contains results on per family.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="model-free">
+<span id="tmerlin"></span><h1>Model-free<a class="headerlink" href="#model-free" title="Permalink to this headline">¶</a></h1>
+<p>ONETOOL uses Merlin for multipoint model-free linkage analysis accounting for linkage
+disequilibrium (LD), providing the Kong and Cox (1997) NPL statistics.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --vcf test_miss0.vcf --merlin --map test_miss0.map
+</pre></div>
+</div>
+<p>It generates a output file with the extention .nonparametric.tbl.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The same restriction applies to the size of family as in MERLIN.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="6_association.html" class="btn btn-neutral float-right" title="Single-variant" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="4_trait.html" class="btn btn-neutral" title="Familial Aggregation (Correlation)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ONETOOL Team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.9',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

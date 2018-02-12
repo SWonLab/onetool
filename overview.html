@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Overview &mdash; ONETOOL 0.9 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="ONETOOL 0.9 documentation" href="index.html"/>
+        <link rel="next" title="Tutorials" href="tutorials_landing.html"/>
+        <link rel="prev" title="Getting Started" href="getting_started.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> ONETOOL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html"> Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""> Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input">Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output">Output</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials_landing.html"> Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_resources.html"> Other Resources</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ONETOOL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Overview</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/overview.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="overview">
+<span id="sec-overview"></span><h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>ONETOOL is a tool for family-based big data analyses.
+It implements the properties of well-known existing family data analysis
+tools and recently developed methods in a computationally efficient manners,
+so is suitable for analyzing the vast amount of variant data availble from
+sequencing family members, providing a rich choice of analysis methods for
+big data from families.</p>
+<p>Overall workflow in ONETOOL is:</p>
+<a class="reference internal image-reference" href="_images/onetool_dia_1.png"><img alt="_images/onetool_dia_1.png" class="align-center" src="_images/onetool_dia_1.png" style="width: 1279.0px; height: 1513.0px;" /></a>
+<div class="section" id="input">
+<h2>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h2>
+<p>ONETOOL supports two different sets of input files, <strong>PLINK set</strong> and <strong>VCF set</strong>.
+The PLINK set consists of three files (i.e., .fam, .bed, and .bim) that are used
+to run PLINK, and the VCF set con-sist of a plink format family file (.fam) and
+a Variant Call Format (.vcf).  The additional phenotypes and covariates are
+supported through an optional input file (.pheno) for both sets of input files.</p>
+<p>ONETOOL also support two different ways to specify the desired analysis options,
+through a command line and a script file.</p>
+<p>The full list of data types and input file formats supported can be found
+in <a class="reference internal" href="tutorials/2_input.html"><em>Input</em></a>.</p>
+</div>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<p>The main features in ONETOOL are:</p>
+<ul>
+<li><p class="first"><strong>InfoQC</strong> analysis</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Variant information</li>
+<li>Sample information</li>
+<li>Pedigree information</li>
+<li>Mendelian error detection</li>
+<li>Relatedness matrix</li>
+<li>Pedigree plot</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Trait</strong> analysis</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Familial Aggregation</li>
+<li>Heritability</li>
+<li>Segregation Analysis</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Linkage</strong> analysis</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Model-based</li>
+<li>Model-free</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Association</strong> analysis</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Single variant - common variant</li>
+<li>Gene-based - rare variant</li>
+<li>Dosage data</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Epistasis</strong> analysis</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Multidimensional Dimensionality Reduction (MDR) analysis</li>
+<li>Generalized MDR analysis</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Imputation</strong> of missing genotype</p>
+</li>
+<li><p class="first"><strong>Data management</strong></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Variant filtering</li>
+<li>Sample filtering</li>
+<li>LD-based prunning</li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>Each method in ONETOOL outputs the result file with the appropriate extension,
+so that the user can recognize it easily.  It has the familiar user interface
+and the same or similar analysis option names as the existing tools, so no, or
+only a minimal, learning curve is needed.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorials_landing.html" class="btn btn-neutral float-right" title="Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="getting_started.html" class="btn btn-neutral" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ONETOOL Team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.9',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

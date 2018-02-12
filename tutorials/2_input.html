@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Input Data Types &mdash; ONETOOL 0.9 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="ONETOOL 0.9 documentation" href="../index.html"/>
+        <link rel="up" title="Tutorials" href="../tutorials_landing.html"/>
+        <link rel="next" title="Main Input Data File" href="2_input_file_main.html"/>
+        <link rel="prev" title="Tutorials" href="../tutorials_landing.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ONETOOL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html"> Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html"> Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials_landing.html"> Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../tutorials_landing.html#input">Input</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="">Input Data Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-file-types">Input File Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#script-file">SCRIPT file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2_input_file_main.html">Main Data Input Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2_input_file_misc.html">Additinal Input Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#infoqc-ananlysis">InfoQC Ananlysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#trait-ananlysis">Trait Ananlysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#linkage-ananlysis">Linkage Ananlysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#association-ananlysis">Association Ananlysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../other_resources.html"> Other Resources</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ONETOOL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../tutorials_landing.html">Tutorials</a> &raquo;</li>
+        
+      <li>Input Data Types</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorials/2_input.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p id="sec-input">ONETOOL supports many different types of data in many different file formats.
+For a run, however, it only requires the input file(s) that are relevant to
+the specified analyses in that run.</p>
+<div class="section" id="input-data-types">
+<h1>Input Data Types<a class="headerlink" href="#input-data-types" title="Permalink to this headline">¶</a></h1>
+<p>Though the main purpose of ONETOOL is for family-based big data analyses, it
+can analyze unrelated individual data as well.</p>
+<p>Types of data supported:</p>
+<ul>
+<li><p class="first"><strong>Sample</strong></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Family samples (related individuals)</li>
+<li>Independent samples (unrelated individuals)</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Phenotype</strong></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Binary</li>
+<li>Continuous</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Variant</strong></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>genotype - common and rare SNPs</li>
+<li>genotype probability/dosage - imputed variants</li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The terms &#8216;sample&#8217;, &#8216;subject&#8217; and &#8216;individual&#8217; are used interchangeably.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The terms &#8216;variant&#8217;, &#8216;SNP&#8217; and &#8216;genotype&#8217; are used interchangeably.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The terms &#8216;trait&#8217; and &#8216;phenotype&#8217; are used interchangeably.</p>
+</div>
+</div>
+<div class="section" id="input-file-types">
+<h1>Input File Types<a class="headerlink" href="#input-file-types" title="Permalink to this headline">¶</a></h1>
+<p>The types of input file (with the expected extension in parenthesis)
+that can be used for an ONETOOL run are listed for different data types.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="52%" />
+<col width="26%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Data Type</th>
+<th class="head">File Type</th>
+<th class="head">Extension</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>sample</td>
+<td><a class="reference internal" href="2_input_file_main.html#ifam"><em>PLINK FAM file</em></a></td>
+<td>.fam</td>
+</tr>
+<tr class="row-odd"><td>phenotype</td>
+<td><a class="reference internal" href="2_input_file_main.html#ipheno"><em>PLINK Phenotype file</em></a></td>
+<td>.pheno</td>
+</tr>
+<tr class="row-even"><td>variant</td>
+<td><a class="reference internal" href="2_input_file_main.html#ivcf"><em>Variant Call Format (VCF) file</em></a></td>
+<td>.vcf</td>
+</tr>
+<tr class="row-odd"><td>variant</td>
+<td><a class="reference internal" href="2_input_file_main.html#ibed-bim"><em>PLINK BED/BIM file</em></a></td>
+<td>.bed/.bim</td>
+</tr>
+<tr class="row-even"><td>variant (dosage)</td>
+<td><a class="reference internal" href="2_input_file_main.html#iimpute2"><em>IMPUTE2 file</em></a></td>
+<td>.impute2/.impute2_info</td>
+</tr>
+<tr class="row-odd"><td>sample + variant</td>
+<td><a class="reference internal" href="2_input_file_main.html#iped-map"><em>PLINK PED/MAP file</em></a></td>
+<td>.ped/.map</td>
+</tr>
+</tbody>
+</table>
+<p>Additinal files for a specific analysis:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="2_input_file_misc.html#ipar"><em>S.A.G.E. Parameter file (.par)</em></a></li>
+<li><a class="reference internal" href="2_input_file_misc.html#ityp"><em>S.A.G.E. Trait genotype probability file (.typ)</em></a></li>
+<li><a class="reference internal" href="2_input_file_misc.html#imap"><em>MERLIN MAP file (.map)</em></a></li>
+<li><a class="reference internal" href="2_input_file_misc.html#iset"><em>Gene SET file (.set)</em></a></li>
+<li><a class="reference internal" href="#iscript"><em>Script file (.script)</em></a></li>
+</ul>
+</div></blockquote>
+<p>Two main input file sets are &#8216;VCF set&#8217; and &#8216;PLINK set&#8217;.</p>
+<p>The <strong>VCF set</strong> consist of a PLINK format family file (.fam) and a Variant Call
+Format file(.vcf).</p>
+<p>The <strong>PLINK set</strong> consists of three files (i.e., .fam, .bed, and .bim) that
+are used to run PLINK.</p>
+<p>The additional phenotypes and covariates are supported through an optional input
+file (.pheno) for both sets of input files.</p>
+</div>
+<div class="section" id="script-file">
+<span id="iscript"></span><h1>SCRIPT file<a class="headerlink" href="#script-file" title="Permalink to this headline">¶</a></h1>
+<p>ONETOOL also support two different ways to run the program, through a command line and a script file (.script).</p>
+<p>A script file includes the input file name(s) and all command-line options
+selected for a ONETOOL run.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --script test.txt
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="2_input_file_main.html" class="btn btn-neutral float-right" title="Main Input Data File" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../tutorials_landing.html" class="btn btn-neutral" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ONETOOL Team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.9',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

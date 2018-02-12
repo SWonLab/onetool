@@ -1,0 +1,492 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pedigree Information &mdash; ONETOOL 0.9 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="ONETOOL 0.9 documentation" href="../index.html"/>
+        <link rel="up" title="Tutorials" href="../tutorials_landing.html"/>
+        <link rel="next" title="Familial Aggregation (Correlation)" href="4_trait.html"/>
+        <link rel="prev" title="Additinal Input files" href="2_input_file_misc.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ONETOOL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html"> Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html"> Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials_landing.html"> Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#input">Input</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../tutorials_landing.html#infoqc-ananlysis">InfoQC Ananlysis</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="">Pedigree Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pedigree-plot">Pedigree Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mendelian-error-check">Mendelian Error Check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#relatedness-matrix">Relatedness Matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sample-information">Sample Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variant-information">Variant Information</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#trait-ananlysis">Trait Ananlysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#linkage-ananlysis">Linkage Ananlysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#association-ananlysis">Association Ananlysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../other_resources.html"> Other Resources</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ONETOOL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../tutorials_landing.html">Tutorials</a> &raquo;</li>
+        
+      <li>Pedigree Information</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorials/3_infoqc.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pedigree-information">
+<span id="sec-infoqc"></span><h1>Pedigree Information<a class="headerlink" href="#pedigree-information" title="Permalink to this headline">¶</a></h1>
+<p>For the informatics of family data, ONETOOL utilizes PEDINFO in the S.A.G.E. package
+that provides many useful descriptive statistics on pedigree data, including means,
+standard deviations; family, sibship and pedigree sizes; and counts of each type of
+relative pair.  This is done for ONETOOL run by default.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam
+$ onetool --fam test_miss00.fam --pheno test_miss0_phen.txt --pname sbp
+</pre></div>
+</div>
+<p>The output file is a text file containing a formatted table with several sub-tables.
+Each sub-table contains the pedigree-wise/pair-wise/sibship-wise/individual-wise descriptive statistics as shown below:</p>
+<a class="reference internal image-reference" href="../_images/pedinfo_out_1.JPG"><img alt="../_images/pedinfo_out_1.JPG" class="align-center" src="../_images/pedinfo_out_1.JPG" style="width: 877.0px; height: 784.0px;" /></a>
+<ol class="arabic simple">
+<li>pedigree count, mean size with standard deviation, range</li>
+<li>pedigree count by generation and numclear family count and inheritance vector bit size</li>
+<li>sibship count, mean size with standard deviation, range</li>
+<li>number of constituent pedigrees (i.e., disjoint sub-pedigrees), marriage rings and loops (if found)</li>
+<li>relative pair count by type and individual count by sex and founder/non-founder/singleton status</li>
+<li>individuals with multiple mates (if found)</li>
+<li>consanguineous mating pairs (if found)</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The colored-blocks are added to show the different sub-tables.</p>
+</div>
+</div>
+<div class="section" id="pedigree-plot">
+<span id="iqplot"></span><h1>Pedigree Plot<a class="headerlink" href="#pedigree-plot" title="Permalink to this headline">¶</a></h1>
+<p>ONETOOL dynamic version with R plugin provides visualization of family data utilizing the
+R package <a class="reference external" href="https://cran.r-project.org/web/packages/kinship2/index.html">kinship2</a> to
+generate a plot (<tt class="docutils literal"><span class="pre">--plot</span></tt>).</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --plot
+</pre></div>
+</div>
+</div>
+<div class="section" id="mendelian-error-check">
+<span id="iqmendelerror"></span><h1>Mendelian Error Check<a class="headerlink" href="#mendelian-error-check" title="Permalink to this headline">¶</a></h1>
+<p>Two types of errors are there in family genetic data, pedigree errors and genotyping error,
+which both can lead to either increased false negatives or false positives in both
+linkage and association studies.</p>
+<p>Pedigree errors are the misspecified relationships among individuals in family data.</p>
+<p>Mendelian inconsistencies can be used to identify relationship errors and genotyping
+error.</p>
+<p>Mendelian inconsistencies are usually identified by comparing the genotypes of one or
+both parents to the genotypes of their offspring.   It involves checking for each locus
+whether one of the two alleles that a offspring has could have been inherited from one
+of its parents.</p>
+<p>ONETOOL detects Mendelian inconsistencies in pedigree data. Each marker is individually
+checked for inconsistencies in every pedigree. To check for Mendelian errors in given
+genotype data, simply add <tt class="docutils literal"><span class="pre">--mendel</span></tt> option.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --vcf test_miss00.vcf --mendel
+</pre></div>
+</div>
+<p>ONETOOL reports the results by family, by sample and by variant.</p>
+<ul class="simple">
+<li><strong>By family (.family.res)</strong></li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="91%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>FID</td>
+<td>Family ID</td>
+</tr>
+<tr class="row-odd"><td>ERROR</td>
+<td>Total number of alleles with Mendelian error in the family</td>
+</tr>
+<tr class="row-even"><td>AVAIL</td>
+<td>Total number of called alleles in the family</td>
+</tr>
+<tr class="row-odd"><td>PROP</td>
+<td>Proportion of alleles with Mendelian error in the family</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>By sample (.sample.res)</strong></li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="91%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>FID</td>
+<td>Family ID of the sample</td>
+</tr>
+<tr class="row-odd"><td>IID</td>
+<td>Individual ID of the sample</td>
+</tr>
+<tr class="row-even"><td>ERROR</td>
+<td>Total number of alleles with Mendelian error in the sample</td>
+</tr>
+<tr class="row-odd"><td>AVAIL</td>
+<td>Total number of called alleles in the sample</td>
+</tr>
+<tr class="row-even"><td>PROP</td>
+<td>Proportion of alleles with Mendelian error in the sample</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><strong>By variant (.variant.res)</strong></li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>CHR</td>
+<td>Chromosome name</td>
+</tr>
+<tr class="row-odd"><td>VARIANT</td>
+<td>Variant ID</td>
+</tr>
+<tr class="row-even"><td>POS</td>
+<td>Physical position of the variant</td>
+</tr>
+<tr class="row-odd"><td>ALT</td>
+<td>An alternative allele</td>
+</tr>
+<tr class="row-even"><td>ERROR</td>
+<td>Total number of alleles with Mendelian error</td>
+</tr>
+<tr class="row-odd"><td>AVAIL</td>
+<td>Total number of called alleles</td>
+</tr>
+<tr class="row-even"><td>PROP</td>
+<td>Proportion of alleles with Mendelian error</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="relatedness-matrix">
+<span id="iqrelatedness"></span><h1>Relatedness Matrix<a class="headerlink" href="#relatedness-matrix" title="Permalink to this headline">¶</a></h1>
+<p>One of the key factors in heritability estimation and a family-based association test is
+how to model the relatedness among the pairs of family members.  Therefore, testing with
+different options for relatedness is crucial to overcome the limitation of one method over
+another.  ONETOOL provides 3 different options:</p>
+<ul class="simple">
+<li>traditional pedigree-based kinship matrix (<tt class="docutils literal"><span class="pre">--kinship</span></tt>)</li>
+<li>identity-by-state (IBS) matrix using genome-wide variant data (<tt class="docutils literal"><span class="pre">--ibs</span></tt>)</li>
+<li>genomic relationship matrix (GRM) using genome-wide variant data (<strong>default</strong>)</li>
+</ul>
+<p>To generate the out file contaning the symmetric relatedness matrix, simply add <tt class="docutils literal"><span class="pre">--makecore</span></tt> option.
+The extensions of the output files are (.theo.cor), (.emp.cor), and (.ibs.cor) for kinship matrix,
+GRM matrix and IBS matrix respectively.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --makecor --kinship
+$ onetool --fam test_miss00.fam --vcf test_miss00.vcf --makecor
+$ onetool --fam test_miss00.fam --vcf test_miss00.vcf --makecor --ibs
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Kinship matrix (<tt class="docutils literal"><span class="pre">--kinship</span></tt>) is pedigree-based, i.e., no variant data are needed.
+IBS matrix (<tt class="docutils literal"><span class="pre">--ibs</span></tt>) and GRM matrix are estimated from the given variant data.</p>
+</div>
+</div>
+<div class="section" id="sample-information">
+<span id="iqsample"></span><h1>Sample Information<a class="headerlink" href="#sample-information" title="Permalink to this headline">¶</a></h1>
+<p>The sample-wise information from variant data helps to better understand the genetic background
+of the individuals in family in population level.
+ONETOOL calculates the following information on each sample.</p>
+<ul class="simple">
+<li><strong>Heterozygosity</strong></li>
+</ul>
+<blockquote>
+<div><div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --vcf test_miss00.vcf --het
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><strong>Ratio of Heterozygote and homozygote</strong></li>
+</ul>
+<blockquote>
+<div><div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --vcf test_miss00.vcf --hethom
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="variant-information">
+<span id="iqvariant"></span><h1>Variant Information<a class="headerlink" href="#variant-information" title="Permalink to this headline">¶</a></h1>
+<p>ONETOOL&#8217;s options for the variant QC and informatics are similar with those
+in PLINK, but they are implemented in a computationally optimized way providing
+more speed and efficiency.</p>
+<p>Types of variant-wise information analysis supported:</p>
+<ul class="simple">
+<li><strong>F-statistics</strong> - Wright&#8217;s fixation index to describe population structure</li>
+</ul>
+<blockquote>
+<div><div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --vcf test_miss00.vcf --pheno test_miss00.pheno --pname ethnicity --fst
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><strong>Allele frequency</strong> - Minor allele frequency</li>
+</ul>
+<blockquote>
+<div><div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --vcf test_miss00.vcf --freq
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><strong>HWE</strong> - Hardy-Weinberg Equlibrium</li>
+</ul>
+<blockquote>
+<div><div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --vcf test_miss00.vcf --hwe
+</pre></div>
+</div>
+</div></blockquote>
+<ul class="simple">
+<li><strong>PCA</strong> - Principle component analysis</li>
+</ul>
+<blockquote>
+<div><div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --vcf test_miss00.vcf --pca --npc 5
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To specify the number of principal components to compute, use <tt class="docutils literal"><span class="pre">--npc</span></tt>.</p>
+</div>
+</div></blockquote>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="4_trait.html" class="btn btn-neutral float-right" title="Familial Aggregation (Correlation)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="2_input_file_misc.html" class="btn btn-neutral" title="Additinal Input files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ONETOOL Team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.9',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

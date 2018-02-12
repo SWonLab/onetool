@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Familial Aggregation (Correlation) &mdash; ONETOOL 0.9 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="ONETOOL 0.9 documentation" href="../index.html"/>
+        <link rel="up" title="Tutorials" href="../tutorials_landing.html"/>
+        <link rel="next" title="Model-based" href="5_linkage.html"/>
+        <link rel="prev" title="Pedigree Information" href="3_infoqc.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> ONETOOL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html"> Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html"> Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../tutorials_landing.html"> Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#input">Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#infoqc-ananlysis">InfoQC Ananlysis</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../tutorials_landing.html#trait-ananlysis">Trait Ananlysis</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="">Familial Aggregation (Correlation)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#segregation-analysis">Segregation analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#heritability-estimation">Heritability Estimation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#linkage-ananlysis">Linkage Ananlysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials_landing.html#association-ananlysis">Association Ananlysis</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../other_resources.html"> Other Resources</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ONETOOL</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../tutorials_landing.html">Tutorials</a> &raquo;</li>
+        
+      <li>Familial Aggregation (Correlation)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tutorials/4_trait.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p id="sec-trait">Trait analysis is the first step in any genetic analysis to establish the
+causal relationship between genetic variants and a trait of interest.  This
+includes studies of familial aggregation (correlation), narrow-sense heritability
+estimation, and segregation analysis.</p>
+<div class="section" id="familial-aggregation-correlation">
+<span id="tfcor"></span><h1>Familial Aggregation (Correlation)<a class="headerlink" href="#familial-aggregation-correlation" title="Permalink to this headline">¶</a></h1>
+<p>Familial aggregation studies determine whether a disease of interest is observed
+in families more than would be expected by chance alone.
+The FCOR module in ONETOOL calculates multivariate familial correlations with
+their asymptotic standard errors.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --fcor
+$ onetool --fam test_miss00.fam --pheno test_miss0_phen.txt --pname sbp --fcor
+</pre></div>
+</div>
+<p>The output file is a text file containing tables of correlations, their standard errors, used pair
+counts and equivalent pair counts for each pair of traits for each subtype and/or main type of relative
+up to 2nd generation.</p>
+<a class="reference internal image-reference" href="../_images/fcor_out_1.JPG"><img alt="../_images/fcor_out_1.JPG" class="align-center" src="../_images/fcor_out_1.JPG" style="width: 1087.0px; height: 969.0px;" /></a>
+<p>The header containes the information on main relation type (parent:offspring) with subtypes pooled
+and total pairs count. The following blocks contain:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><dl class="first docutils">
+<dt>main result table for parent:offspring type</dt>
+<dd><ul class="first last">
+<li>row (rounded box in red) - trait(s) for parent</li>
+<li>column (rounded box in blue) - trait(s) for offspring</li>
+<li>correlations, their standard errors and P-values</li>
+<li>used pair counts and equivalent pair counts</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>pooled cross-correlations of interclass relative types</li>
+<li>homogeneity test result when there are more than 1 trait</li>
+<li>followed by the main result tables for each subtypes pooled</li>
+</ol>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The colored-blocks and boxes are added to show the different parts of tables in the example output above.</p>
+</div>
+</div>
+<div class="section" id="segregation-analysis">
+<span id="tsegreg"></span><h1>Segregation analysis<a class="headerlink" href="#segregation-analysis" title="Permalink to this headline">¶</a></h1>
+<p>The SEGREG module fits and tests Mendelian segregation models in the presence of residual familial correlations.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --segreg
+$ onetool --fam test_miss00.fam --pheno test_miss0_phen.txt --pname sbp --segreg
+</pre></div>
+</div>
+<p>It generates 3 output files:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Summary output file (.segreg.sum) - contains the table of final estimates of the parameters and their standard errors, and other results.</li>
+<li>Detailed output file (.segreg.det) - contains the table of final estimates and variance-covariance matrix of the parameter estimates.</li>
+<li>Trait genotype probability and penetrance function output file (.segreg.typ) - contains the individual specific type probabilities
+conditional on the model and all the pedigree information available, and individual specific penetrance information
+which is an input file into model-based linkage module (<tt class="docutils literal"><span class="pre">--lodlink</span> <span class="pre">--typ</span> <span class="pre">onetool.segreg.typ</span></tt>).</li>
+</ul>
+</div></blockquote>
+<p>At the end of the detailed output contains the likelihood comparison table from comingling analysis (by default).</p>
+<a class="reference internal image-reference" href="../_images/segreg_det_1.JPG"><img alt="../_images/segreg_det_1.JPG" class="align-center" src="../_images/segreg_det_1.JPG" style="width: 1155.0px; height: 221.0px;" /></a>
+</div>
+<div class="section" id="heritability-estimation">
+<span id="theri"></span><h1>Heritability Estimation<a class="headerlink" href="#heritability-estimation" title="Permalink to this headline">¶</a></h1>
+<p>Heritability estimation can be done using different relatedness options:</p>
+<ul class="simple">
+<li>traditional pedigree-based kinship matrix (<tt class="docutils literal"><span class="pre">--kinship</span></tt>)</li>
+<li>identity-by-state (IBS) matrix using genome-wide variant data (<tt class="docutils literal"><span class="pre">--ibs</span></tt>)</li>
+<li>genomic relationship matrix (GRM) using genome-wide variant data (<strong>default</strong>)</li>
+</ul>
+<div class="highlight-text"><div class="highlight"><pre><span></span>$ onetool --fam test_miss00.fam --heritability --kinship
+$ onetool --fam test_miss00.fam --vcf test_miss0.vcf --heritability --ibs
+$ onetool --fam test_miss00.fam --vcf test_miss0.vcf --heritability
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Kinship matrix (<tt class="docutils literal"><span class="pre">--kinship</span></tt>) is pedigree-based, i.e., no variant data are used.
+IBS matrix (<tt class="docutils literal"><span class="pre">--ibs</span></tt>) and GRM matrix are estimated from the given variant data.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="5_linkage.html" class="btn btn-neutral float-right" title="Model-based" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="3_infoqc.html" class="btn btn-neutral" title="Pedigree Information" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ONETOOL Team.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.9',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: ''
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

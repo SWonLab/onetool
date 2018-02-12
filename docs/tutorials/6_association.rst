@@ -7,10 +7,10 @@ between trait(s) and both single-variant (common variant) and gene-based (rare v
 .. _asingle:
 
 ==============
-Single-variant
+Single variant
 ==============
 
-Summary of single-variant analyses available in ONETOOL:
+Summary of single variant analyses available in ONETOOL:
 
 .. image:: misc/assoc_1.JPG
    :scale: 100 %
@@ -22,10 +22,10 @@ Summary of single-variant analyses available in ONETOOL:
 .. _agene:
 
 ==========================
-Gene-based (Rare Variants)
+Gene-based (Rare variant)
 ==========================
 
-Summary of gene-based (rare-variant) analyses available in ONETOOL:
+Summary of gene-based (rare variant) analyses available in ONETOOL:
 
 .. image:: misc/assoc_2.JPG
    :scale: 100 %

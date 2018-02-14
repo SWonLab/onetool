@@ -11,7 +11,7 @@ analysis methods for big data from families.
 
 For more documentation, visit [https://swonlab.github.io/onetool](https://swonlab.github.io/onetool).
 
-The pre-built ONETOOL binaries is available in ONETOOL's [homepage](http://healthstat.snu.ac.kr/software/onetool).
+The pre-built ONETOOL binaries are available in ONETOOL's [homepage](http://healthstat.snu.ac.kr/software/onetool).
 
 [BUILD]: https://travis-ci.org/SWonLab/onetool
 [CHANGELOG]: ./CHANGELOG.md

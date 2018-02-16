@@ -35,6 +35,7 @@ case $hardware in
 		  Darwin) ARCH=x86-64-darwin  ;;
                        *) ARCH=               ;;
               esac                
+              ;;
         *)  ARCH=     ;;     
 esac
 

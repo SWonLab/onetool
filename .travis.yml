@@ -27,8 +27,7 @@ matrix:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get -y install r-base
-  - chmod +x ./src/make_test.sh
+  - chmod +x make_test.sh
 script:
-  - cd src
   - ./make_test.sh
   

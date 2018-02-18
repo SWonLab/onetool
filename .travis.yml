@@ -13,6 +13,9 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-4.9
+            - libf2c
+            - libblas-dev
+            - liblapack-dev
             - libboost-all-dev
       env: COMPILER=g++-4.9
     - compiler: gcc
@@ -22,6 +25,9 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
+            - libf2c
+            - libblas-dev
+            - liblapack-dev
             - libboost-all-dev
       env: COMPILER=g++-5
 

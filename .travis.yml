@@ -13,7 +13,6 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-4.9
-            - libf2c
             - libblas-dev
             - liblapack-dev
             - libboost-all-dev
@@ -25,7 +24,6 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-5
-            - libf2c
             - libblas-dev
             - liblapack-dev
             - libboost-all-dev
@@ -35,6 +33,7 @@ matrix:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get -y install r-base
+  - sudo apt-get -y install f2c
   - chmod +x make_test.sh
 script:
   - ./make_test.sh
